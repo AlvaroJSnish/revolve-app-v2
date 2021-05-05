@@ -4,7 +4,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { LoadingCircle } from "../../components";
 import { loginRequest } from "../../redux/actions/AuthActions";
 
-export function SignIn() {
+export function SignIn({ history }) {
   const dispatch = useDispatch();
   const loadingSignIn = useSelector(
     (state) => state.auth.loadingSignIn,
@@ -29,7 +29,7 @@ export function SignIn() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(loginRequest(email, password));
+    dispatch(loginRequest(email, password, history));
   }
 
   return (
