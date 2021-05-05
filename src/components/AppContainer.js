@@ -16,9 +16,9 @@ const navigation = [
 ];
 
 const userNavigation = [
-  { name: "Your Profile", path: "/profile" },
-  { name: "Settings", path: "/settings" },
-  { name: "Sign out", path: "/signout" },
+  { name: "Your Profile", path: "/app/account" },
+  { name: "Settings", path: "/app/settings" },
+  // { name: "Sign out", path: "/signout" },
 ];
 
 function classNames(...classes) {
