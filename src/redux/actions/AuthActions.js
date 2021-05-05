@@ -22,7 +22,7 @@ const login = (email, password, history) => async (dispatch) => {
       payload: { user: res.user, token: res.access_token },
     });
 
-    return history.push("/dashboard");
+    return history.push("/app");
   } catch (e) {
     return dispatch({
       type: authTypes.LOGIN_FAILURE,

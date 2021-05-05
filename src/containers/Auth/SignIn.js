@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { LoadingCircle } from "../../components";
@@ -42,9 +43,12 @@ export function SignIn({ history }) {
             </h2>
             <p className="mt-2 text-sm text-gray-600 max-w">
               Or{" "}
-              <a className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link
+                to={"/"}
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 start your 14-day free trial
-              </a>
+              </Link>
             </p>
           </div>
 
@@ -57,7 +61,10 @@ export function SignIn({ history }) {
 
                 <div className="mt-1 grid grid-cols-1 gap-1">
                   <div>
-                    <a className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <Link
+                      to={"/"}
+                      className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    >
                       <span className="sr-only">Sign in with GitHub</span>
                       <svg
                         className="w-5 h-5"
@@ -71,7 +78,7 @@ export function SignIn({ history }) {
                           clipRule="evenodd"
                         />
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -154,9 +161,12 @@ export function SignIn({ history }) {
                   </div>
 
                   <div className="text-sm">
-                    <a className="font-medium text-indigo-600 hover:text-indigo-500">
+                    <Link
+                      to={"/"}
+                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                    >
                       Forgot your password?
-                    </a>
+                    </Link>
                   </div>
                 </div>
 

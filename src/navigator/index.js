@@ -13,16 +13,17 @@ export function Navigator() {
     <Router>
       <Switch>
         <Route exact path="/" component={SignIn} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/app" component={Dashboard} />
       </Switch>
     </Router>
   );
 }
 
-function PrivateRoute({ component: Component = null, ...rest }) {
+export function PrivateRoute({ component: Component = null, ...rest }) {
   return (
     <Route
       {...rest}
+      exact
       render={(props) =>
         localStorage.getItem("access_token") ? (
           <Component {...props} />
