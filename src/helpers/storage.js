@@ -1,3 +1,5 @@
 export function saveToStorage(key, value) {
-  localStorage.setItem(key, value);
+  if (value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
 }

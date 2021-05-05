@@ -15,6 +15,7 @@ const login = (email, password, history) => async (dispatch) => {
     const res = await (await post("auth/signin", { email, password })).data;
 
     saveToStorage("access_token", res.access_token);
+    saveToStorage("user", res.user);
 
     dispatch({
       type: authTypes.LOGIN_SUCCESS,

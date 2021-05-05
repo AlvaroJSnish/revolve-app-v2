@@ -1,24 +1,10 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
-  HomeIcon,
-  InboxIcon,
-  MenuIcon,
-  UsersIcon,
-  XIcon,
-} from "@heroicons/react/outline";
+import { HomeIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { useStorage } from "../helpers/hooks";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: InboxIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartBarIcon, current: false },
 ];
 
 function classNames(...classes) {
@@ -27,9 +13,10 @@ function classNames(...classes) {
 
 export function Container({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [user] = useStorage(null, "user");
 
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-100">
+    <div className="h-screen flex overflow-hidden">
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -80,11 +67,7 @@ export function Container({ children }) {
               </Transition.Child>
               <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
                 <div className="flex-shrink-0 flex items-center px-4">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                    alt="Workflow"
-                  />
+                  <h3 className="h-8 w-auto">Revolve.ai</h3>
                 </div>
                 <nav className="mt-5 px-2 space-y-1">
                   {navigation.map((item) => (
@@ -93,15 +76,15 @@ export function Container({ children }) {
                       href={item.href}
                       className={classNames(
                         item.current
-                          ? "bg-gray-100 text-gray-900"
-                          : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+                          ? "text-yellow-500"
+                          : "text-gray-400 hover:text-gray-900",
                         "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                       )}
                     >
                       <item.icon
                         className={classNames(
                           item.current
-                            ? "text-gray-500"
+                            ? "text-yellow-500"
                             : "text-gray-400 group-hover:text-gray-500",
                           "mr-4 h-6 w-6"
                         )}
@@ -112,7 +95,7 @@ export function Container({ children }) {
                   ))}
                 </nav>
               </div>
-              <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
+              <div className="flex-shrink-0 flex p-4">
                 <a href="#" className="flex-shrink-0 group block">
                   <div className="flex items-center">
                     <div>
@@ -124,7 +107,7 @@ export function Container({ children }) {
                     </div>
                     <div className="ml-3">
                       <p className="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                        Tom Cook
+                        {user.email}
                       </p>
                       <p className="text-sm font-medium text-gray-500 group-hover:text-gray-700">
                         View profile
@@ -145,14 +128,10 @@ export function Container({ children }) {
       <div className="hidden md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex flex-col h-0 flex-1 border-r border-gray-200 bg-white">
+          <div className="flex flex-col h-0 flex-1 bg-white">
             <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-              <div className="flex items-center flex-shrink-0 px-4">
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                  alt="Workflow"
-                />
+              <div className="flex justify-center flex-shrink-0 px-4">
+                <h3 className="h-8 w-auto">Revolve.ai</h3>
               </div>
               <nav className="mt-5 flex-1 px-2 bg-white space-y-1">
                 {navigation.map((item) => (
@@ -161,15 +140,15 @@ export function Container({ children }) {
                     href={item.href}
                     className={classNames(
                       item.current
-                        ? "bg-gray-100 text-gray-900"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+                        ? "text-yellow-500"
+                        : "text-gray-400 hover:text-gray-900",
                       "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
                     )}
                   >
                     <item.icon
                       className={classNames(
                         item.current
-                          ? "text-gray-500"
+                          ? "text-yellow-500"
                           : "text-gray-400 group-hover:text-gray-500",
                         "mr-3 h-6 w-6"
                       )}
@@ -180,7 +159,7 @@ export function Container({ children }) {
                 ))}
               </nav>
             </div>
-            <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
+            <div className="flex-shrink-0 flex p-4">
               <a href="#" className="flex-shrink-0 w-full group block">
                 <div className="flex items-center">
                   <div>
@@ -192,7 +171,7 @@ export function Container({ children }) {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                      Tom Cook
+                      {user.email}
                     </p>
                     <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
                       View profile
@@ -214,13 +193,8 @@ export function Container({ children }) {
             <MenuIcon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+        <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none bg-white">
           <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900">
-                Dashboard
-              </h1>
-            </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {children}
             </div>
