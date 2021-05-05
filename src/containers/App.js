@@ -1,4 +1,6 @@
 import { Provider } from "react-redux";
+
+import { Navigator } from "../navigator";
 import { useStore } from "../redux/store";
 
 function App() {
@@ -6,7 +8,7 @@ function App() {
 
   return (
     <Provider store={store}>
-      <div>asd</div>
+      <Navigator />
     </Provider>
   );
 }
