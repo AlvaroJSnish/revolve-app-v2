@@ -5,7 +5,7 @@ function getHeaders(headers = {}) {
 
   return {
     ...headers,
-    ...(token && { Authorization: `Token ${token}` }),
+    ...(token && { Authorization: `Token ${JSON.parse(token)}` }),
   };
 }
 

@@ -5,7 +5,7 @@ import { applyMiddleware, createStore } from "redux";
 
 import reducers from "./reducers";
 
-let store;
+export let store;
 
 function initStore(initialState) {
   return createStore(reducers, initialState, applyMiddleware(thunkMiddleware));
