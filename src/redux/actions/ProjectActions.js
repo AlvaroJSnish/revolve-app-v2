@@ -51,3 +51,9 @@ export const updateProjectFromWS = (project) => (dispatch) => {
     payload: { project },
   });
 };
+
+export const clearNotifications = () => (dispatch) => {
+  dispatch({
+    type: projectTypes.CLEAR_NOTIFICATIONS,
+  });
+};

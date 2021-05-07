@@ -11,6 +11,8 @@ const initialState = {
   loadingProject: false,
   project: null,
   projectError: null,
+
+  projectsTrainedNotifications: [],
 };
 
 export default function projectReducer(
@@ -75,6 +77,17 @@ export default function projectReducer(
             }),
           ],
         },
+        projectsTrainedNotifications: [
+          ...state.projectsTrainedNotifications,
+          payload.project.project_name,
+        ],
+      };
+    }
+
+    case projectTypes.CLEAR_NOTIFICATIONS: {
+      return {
+        ...state,
+        projectsTrainedNotifications: [],
       };
     }
 
