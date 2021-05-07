@@ -9,14 +9,11 @@ export function Projects() {
   const dispatch = useDispatch();
   const { path } = useRouteMatch();
 
-  const { socket } = useSelector((state) => state.socket, deepEqual);
   const { projects } = useSelector((state) => state.projects, deepEqual);
 
   useEffect(() => {
-    // if (!fetchProjectsCalled) {
     dispatch(fetchProjectsRequest());
-    // }
-  }, [socket]);
+  }, []);
 
   function renderCurrentStatus(status) {
     switch (status) {

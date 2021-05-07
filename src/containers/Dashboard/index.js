@@ -9,13 +9,13 @@ import { PrivateRoute } from "../../navigator";
 import { AppContainer } from "../../components";
 import { Settings } from "../Settings";
 import { Project } from "../Projects/Project";
-// import { onConnectWebsocket } from "../../helpers/websocket";
+import { onConnectWebsocket } from "../../helpers/websocket";
 
 export function Dashboard() {
   const { path } = useRouteMatch();
 
   useEffect(() => {
-    // onConnectWebsocket();
+    onConnectWebsocket();
   }, []);
 
   return (
