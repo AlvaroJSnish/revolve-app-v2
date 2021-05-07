@@ -17,6 +17,22 @@ export function Projects() {
 
   function renderCurrentStatus(status) {
     switch (status) {
+      case "FAILURE": {
+        return (
+          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+            Failure
+          </span>
+        );
+      }
+
+      case "PENDING": {
+        return (
+          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+            Pending
+          </span>
+        );
+      }
+
       case "SUCCESS":
       default: {
         return (
@@ -28,7 +44,15 @@ export function Projects() {
     }
   }
 
-  function renderTrained(trained) {
+  function renderTrained(trained, status) {
+    if (status === "PENDING") {
+      return (
+        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+          Training
+        </span>
+      );
+    }
+
     if (trained) {
       return (
         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -74,7 +98,7 @@ export function Projects() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Accuracy
+                    Accuracy (%)
                   </th>
                   <th
                     scope="col"
@@ -106,10 +130,13 @@ export function Projects() {
                       {renderCurrentStatus(project.training_task_status)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {renderTrained(project.trained)}
+                      {renderTrained(
+                        project.trained,
+                        project.training_task_status
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {project.accuracy && (project.accuracy * 100).toFixed(2)}%
+                      {project.accuracy && (project.accuracy * 100).toFixed(2)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {project.error && project.error.toFixed(2)}

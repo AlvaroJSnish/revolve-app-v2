@@ -58,6 +58,26 @@ export default function projectReducer(
       return { ...state, loadingProject: false, error: payload.error };
     }
 
+    case projectTypes.UPDATE_PROJECT_FROM_WS: {
+      return {
+        ...state,
+        projects: {
+          ...state.projects,
+          results: [
+            ...state.projects.results.map((project) => {
+              if (project.project === payload.project.id) {
+                return {
+                  project_name: payload.project.project_name,
+                  ...payload.project.project_configuration[0],
+                };
+              }
+              return { ...project };
+            }),
+          ],
+        },
+      };
+    }
+
     default:
       return { ...state };
   }

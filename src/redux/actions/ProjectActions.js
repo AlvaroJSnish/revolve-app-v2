@@ -44,3 +44,10 @@ export const fetchProject = (id) => async (dispatch) => {
     });
   }
 };
+
+export const updateProjectFromWS = (project) => (dispatch) => {
+  dispatch({
+    type: projectTypes.UPDATE_PROJECT_FROM_WS,
+    payload: { project },
+  });
+};

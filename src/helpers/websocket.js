@@ -1,6 +1,9 @@
 import { store } from "../redux/store";
 import { connectWebsocket } from "../redux/actions/WebsocketActions";
-import { fetchProjects } from "../redux/actions/ProjectActions";
+import {
+  fetchProjects,
+  updateProjectFromWS,
+} from "../redux/actions/ProjectActions";
 
 export function onConnectWebsocket() {
   const access_token = localStorage.getItem("access_token");
@@ -18,14 +21,15 @@ export function onConnectWebsocket() {
 }
 
 function handleMessages(event) {
-  const { key, data } = JSON.parse(event.data);
+  const { type, message } = JSON.parse(event.data);
 
-  console.log(key, data);
-
-  switch (key) {
-    case socketEvents.get_user_projects: {
-      store.dispatch(fetchProjects(data));
-      break;
+  switch (type) {
+    // case socketEvents.get_user_projects: {
+    //   store.dispatch(fetchProjects(data));
+    //   break;
+    // }
+    case socketEvents.updated_project: {
+      return store.dispatch(updateProjectFromWS(JSON.parse(message)));
     }
 
     default: {
@@ -36,4 +40,5 @@ function handleMessages(event) {
 
 const socketEvents = {
   get_user_projects: "get_user_projects",
+  updated_project: "updated_project",
 };
