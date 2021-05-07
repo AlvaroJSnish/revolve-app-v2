@@ -34,6 +34,7 @@ export default function projectReducer(
             ...payload.projects.results.map((result) => ({
               project_name: result.project_name,
               ...result.project_configuration[0],
+              ...result,
             })),
           ],
         },
