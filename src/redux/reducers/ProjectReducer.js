@@ -7,6 +7,10 @@ const initialState = {
   },
   projectsError: null,
   fetchProjectsCalled: false,
+
+  loadingProject: false,
+  project: null,
+  projectError: null,
 };
 
 export default function projectReducer(
@@ -36,6 +40,22 @@ export default function projectReducer(
 
     case projectTypes.FETCH_PROJECTS_FAILURE: {
       return { ...state, loadingProjects: false, projectsError: payload.error };
+    }
+
+    case projectTypes.FETCH_PROJECT_REQUEST: {
+      return { ...state, loadingProject: true };
+    }
+
+    case projectTypes.FETCH_PROJECT_SUCCESS: {
+      return {
+        ...state,
+        loadingProject: false,
+        project: { ...payload.project },
+      };
+    }
+
+    case projectTypes.FETCH_PROJECT_FAILURE: {
+      return { ...state, loadingProject: false, error: payload.error };
     }
 
     default:

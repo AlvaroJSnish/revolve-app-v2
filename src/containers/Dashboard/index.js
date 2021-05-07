@@ -8,6 +8,7 @@ import { Projects } from "../Projects";
 import { PrivateRoute } from "../../navigator";
 import { AppContainer } from "../../components";
 import { Settings } from "../Settings";
+import { Project } from "../Projects/Project";
 // import { onConnectWebsocket } from "../../helpers/websocket";
 
 export function Dashboard() {
@@ -22,6 +23,7 @@ export function Dashboard() {
       <PrivateRoute exact path={path} component={Home} />
       <PrivateRoute exact path={`${path}/dashboard`} component={Home} />
       <PrivateRoute exact path={`${path}/projects`} component={Projects} />
+      <PrivateRoute exact path={`${path}/projects/:id`} component={Project} />
       <PrivateRoute exact path={`${path}/account`} component={Account} />
       <PrivateRoute exact path={`${path}/settings`} component={Settings} />
     </AppContainer>

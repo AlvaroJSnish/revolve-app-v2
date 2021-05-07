@@ -1,19 +1,51 @@
-import { useEffect } from "react";
 import deepEqual from "deep-equal";
+import { useEffect } from "react";
+import { Link, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchProjectRequest } from "../../redux/actions/ProjectActions";
+import { fetchProjectsRequest } from "../../redux/actions/ProjectActions";
 
 export function Projects() {
   const dispatch = useDispatch();
+  const { path } = useRouteMatch();
+
   const { socket } = useSelector((state) => state.socket, deepEqual);
   const { projects } = useSelector((state) => state.projects, deepEqual);
 
   useEffect(() => {
     // if (!fetchProjectsCalled) {
-    dispatch(fetchProjectRequest());
+    dispatch(fetchProjectsRequest());
     // }
   }, [socket]);
+
+  function renderCurrentStatus(status) {
+    switch (status) {
+      case "SUCCESS":
+      default: {
+        return (
+          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+            Success
+          </span>
+        );
+      }
+    }
+  }
+
+  function renderTrained(trained) {
+    if (trained) {
+      return (
+        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+          Trained
+        </span>
+      );
+    }
+
+    return (
+      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+        Not trained
+      </span>
+    );
+  }
 
   return (
     <div className="flex flex-col">
@@ -33,7 +65,13 @@ export function Projects() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Status
+                    Current status
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Trained
                   </th>
                   <th
                     scope="col"
@@ -68,9 +106,10 @@ export function Projects() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                        Active
-                      </span>
+                      {renderCurrentStatus(project.training_task_status)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {renderTrained(project.trained)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {project.accuracy && (project.accuracy * 100).toFixed(2)}%
@@ -79,12 +118,12 @@ export function Projects() {
                       {project.error && project.error.toFixed(2)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <a
-                        href="#"
+                      <Link
+                        to={`${path}/${project.project}`}
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         Edit
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 ))}
