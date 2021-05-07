@@ -20,6 +20,8 @@ export function onConnectWebsocket() {
 function handleMessages(event) {
   const { key, data } = JSON.parse(event.data);
 
+  console.log(key, data);
+
   switch (key) {
     case socketEvents.get_user_projects: {
       store.dispatch(fetchProjects(data));
