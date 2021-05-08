@@ -1,5 +1,6 @@
 import deepEqual from "deep-equal";
 import { useEffect } from "react";
+import { format } from "date-fns";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -106,7 +107,13 @@ export function Projects() {
                   >
                     Error
                   </th>
-                  <th scope="col" className="relative px-6 py-3">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Last time trained
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     <span className="sr-only">Edit</span>
                   </th>
                 </tr>
@@ -140,6 +147,13 @@ export function Projects() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {project.error && project.error.toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {project.last_time_trained &&
+                        format(
+                          new Date(project.last_time_trained),
+                          "dd/MM/yyyy"
+                        )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <Link
