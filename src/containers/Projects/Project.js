@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { PaperClipIcon } from "@heroicons/react/solid";
-import { fetchProject } from "../../redux/actions/ProjectActions";
+import { fetchProjectRequest } from "../../redux/actions/ProjectActions";
 
 export function Project() {
   const dispatch = useDispatch();
   const { params } = useRouteMatch();
 
   useEffect(() => {
-    dispatch(fetchProject(params.id));
+    dispatch(fetchProjectRequest(params.id));
   }, []);
 
   return (
