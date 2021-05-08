@@ -7,12 +7,14 @@ import {
 
 import { SignIn } from "../containers/Auth";
 import { Dashboard } from "../containers/Dashboard";
+import { Signup } from "../containers/Auth/SignUp";
 
 export function Navigator() {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={SignIn} />
+        <Route exact path="/signup" component={Signup} />
         <PrivateRoute path="/app" component={Dashboard} />
       </Switch>
     </Router>

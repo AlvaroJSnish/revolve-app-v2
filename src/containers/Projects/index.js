@@ -116,6 +116,9 @@ export function Projects() {
                   <th scope="col" className="px-6 py-3">
                     <span className="sr-only">Edit</span>
                   </th>
+                  <th scope="col" className="px-6 py-3">
+                    <span className="sr-only">View</span>
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -161,6 +164,14 @@ export function Projects() {
                         className="text-indigo-600 hover:text-indigo-900"
                       >
                         Edit
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <Link
+                        to={`${path}/${project.project}`}
+                        className="text-indigo-600 hover:text-indigo-900"
+                      >
+                        View
                       </Link>
                     </td>
                   </tr>
