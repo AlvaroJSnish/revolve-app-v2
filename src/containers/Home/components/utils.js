@@ -93,7 +93,7 @@ export function renderInfo({ label, last_week_data = 0, average_data = 0 }) {
     }
   }
   return (
-    <div className="flex w-full md:w-1/2 p-10 bg-gray-100 text-gray-600 items-center">
+    <div className="flex w-full md:w-1/2 p-10 bg-gray-50 text-gray-600 items-center">
       <div className="w-full">
         <h3 className="text-lg font-semibold leading-tight text-gray-800">
           {label} evolution
