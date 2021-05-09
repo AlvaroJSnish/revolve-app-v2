@@ -9,8 +9,8 @@ export function AccuracyChart({
     label: "Accuracy",
     color: "rgba(116, 185, 255,1.0)",
     chartData: {
-      labels: ["", "", ""],
-      data: [0, last_week_average_accuracy, average_accuracy, 100],
+      labels: ["", "Last week", "This week"],
+      data: [0, last_week_average_accuracy * 100, average_accuracy * 100, 100],
     },
   };
   const data = buildData(info);

@@ -6,8 +6,8 @@ export function ErrorChart({ average_error, last_week_average_error }) {
     label: "Error",
     color: "rgba(255, 118, 117,1.0)",
     chartData: {
-      labels: ["", "", ""],
-      data: [0, last_week_average_error, average_error, 100],
+      labels: ["", "Last week", "This week"],
+      data: [0, last_week_average_error, average_error, 2],
     },
   };
   const data = buildData(info);

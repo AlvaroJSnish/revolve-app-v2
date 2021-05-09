@@ -49,6 +49,49 @@ export const options = {
 export const numberToFix = (number, fix) => (number || 0).toFixed(fix);
 
 export function renderInfo({ label, last_week_data = 0, average_data = 0 }) {
+  function renderNumbers() {
+    let ad = average_data;
+    let lwad = last_week_data;
+
+    if (label === "Accuracy") {
+      ad = ad * 100;
+      lwad = last_week_data * 100;
+
+      return (
+        <>
+          <span className="block leading-none text-3xl text-gray-800">
+            {numberToFix(ad, 2)}%
+          </span>
+          <span
+            className={`
+                block leading-5 text-sm ml-4
+                ${lwad < ad ? "text-green-500" : "text-red-500"}
+              `}
+          >
+            {lwad > ad ? "▼ -" : "▲ +"}
+            {(lwad - ad < 0 ? (lwad - ad) * -1 : lwad - ad).toFixed(2)}
+          </span>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <span className="block leading-none text-3xl text-gray-800">
+            {numberToFix(ad, 2)}
+          </span>
+          <span
+            className={`
+                block leading-5 text-sm ml-4
+                ${lwad > ad ? "text-green-500" : "text-red-500"}
+              `}
+          >
+            {lwad < ad ? "▼ +" : "▲ -"}
+            {(lwad - ad < 0 ? (lwad - ad) * -1 : lwad - ad).toFixed(2)}
+          </span>
+        </>
+      );
+    }
+  }
   return (
     <div className="flex w-full md:w-1/2 p-10 bg-gray-100 text-gray-600 items-center">
       <div className="w-full">
@@ -58,31 +101,7 @@ export function renderInfo({ label, last_week_data = 0, average_data = 0 }) {
         <h6 className="text-sm leading-tight mb-2 text-gray-400">
           <span>Changes on {label} from last week</span>
         </h6>
-        <div className="flex w-full items-end mb-6">
-          <span className="block leading-none text-3xl text-gray-800">
-            {numberToFix(last_week_data - average_data, 2)}%
-          </span>
-          <span
-            className={`
-                block leading-5 text-sm ml-4
-                ${
-                  last_week_data > average_data
-                    ? "text-green-500"
-                    : "text-red-500"
-                }
-              `}
-          >
-            {`${last_week_data - average_data <= 0 ? "▼" : "▲"} ${(
-              last_week_data - average_data
-            ).toFixed(2)} ${
-              average_data !== 0 && last_week_data !== 0
-                ? `(${((last_week_data / average_data) * 100 - 100).toFixed(
-                    2
-                  )}%)`
-                : ""
-            }`}
-          </span>
-        </div>
+        <div className="flex w-full items-end mb-6">{renderNumbers()}</div>
       </div>
     </div>
   );
