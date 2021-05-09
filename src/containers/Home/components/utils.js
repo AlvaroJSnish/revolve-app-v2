@@ -99,7 +99,7 @@ export function renderInfo({ label, last_week_data = 0, average_data = 0 }) {
           {label} evolution
         </h3>
         <h6 className="text-sm leading-tight mb-2 text-gray-400">
-          <span>Changes on {label} from last week</span>
+          <span>Changes on {label.toLowerCase()} from last week</span>
         </h6>
         <div className="flex w-full items-end mb-6">{renderNumbers()}</div>
       </div>
