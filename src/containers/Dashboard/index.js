@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { Switch, useRouteMatch } from "react-router-dom";
 
 import { Home } from "../Home";
@@ -20,20 +20,26 @@ export function Dashboard() {
   }, []);
 
   return (
-    <AppContainer>
-      <Switch>
-        <PrivateRoute exact path={path} component={Home} />
-        <PrivateRoute exact path={`${path}/dashboard`} component={Home} />
-        <PrivateRoute exact path={`${path}/projects`} component={Projects} />
-        <PrivateRoute
-          exact
-          path={`${path}/projects/new-project`}
-          component={NewProject}
-        />
-        <PrivateRoute exact path={`${path}/projects/:id`} component={Project} />
-        <PrivateRoute exact path={`${path}/account`} component={Account} />
-        <PrivateRoute exact path={`${path}/settings`} component={Settings} />
-      </Switch>
-    </AppContainer>
+    <Suspense fallback={"loading..."}>
+      <AppContainer>
+        <Switch>
+          <PrivateRoute exact path={path} component={Home} />
+          <PrivateRoute exact path={`${path}/dashboard`} component={Home} />
+          <PrivateRoute exact path={`${path}/projects`} component={Projects} />
+          <PrivateRoute
+            exact
+            path={`${path}/projects/new-project`}
+            component={NewProject}
+          />
+          <PrivateRoute
+            exact
+            path={`${path}/projects/:id`}
+            component={Project}
+          />
+          <PrivateRoute exact path={`${path}/account`} component={Account} />
+          <PrivateRoute exact path={`${path}/settings`} component={Settings} />
+        </Switch>
+      </AppContainer>
+    </Suspense>
   );
 }

@@ -1,12 +1,14 @@
 import { Line } from "react-chartjs-2";
+import { useTranslation } from "react-i18next";
 import { buildData, options, renderInfo } from "./utils";
 
 export function ErrorChart({ average_error, last_week_average_error }) {
+  const { t } = useTranslation();
   const info = {
-    label: "Error",
+    label: t("projects.Error"),
     color: "rgba(255, 118, 117,1.0)",
     chartData: {
-      labels: ["", "Last week", "This week"],
+      labels: ["", t("home.lastWeek"), t("home.thisWeek")],
       data: [0, last_week_average_error, average_error, 2],
     },
   };
@@ -18,9 +20,10 @@ export function ErrorChart({ average_error, last_week_average_error }) {
         <Line data={data} options={options} />
       </div>
       {renderInfo({
-        label: "Error",
+        label: t("projects.error"),
         last_week_data: last_week_average_error,
         average_data: average_error,
+        labelToCompare: "error",
       })}
     </div>
   );

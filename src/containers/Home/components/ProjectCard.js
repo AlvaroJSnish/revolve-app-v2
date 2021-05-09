@@ -1,11 +1,18 @@
-import { useHistory, useRouteMatch } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useTranslation, Trans } from "react-i18next";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 import { selectProjectsToShow } from "../../../redux/actions/ProjectActions";
 
-export function ProjectCard({ label, number_models_trained, type }) {
+export function ProjectCard({
+  label,
+  number_models_trained,
+  type,
+  labelLowerCase,
+}) {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { path } = useRouteMatch();
 
   function onNavigate() {
@@ -38,7 +45,7 @@ export function ProjectCard({ label, number_models_trained, type }) {
       </dt>
       <dd className="ml-16 pb-6 flex items-baseline sm:pb-7">
         <p className="text-2xl font-semibold text-gray-900">
-          {number_models_trained} projects trained
+          {number_models_trained} {t("home.projectsTrained")}
         </p>
         <div className="absolute bottom-0 inset-x-0 bg-gray-50 px-4 py-4 sm:px-6">
           <div className="text-sm">
@@ -46,9 +53,10 @@ export function ProjectCard({ label, number_models_trained, type }) {
               onClick={onNavigate}
               className="font-medium  hover:text-indigo-600"
             >
-              View all{" "}
-              <span className="text-indigo-600">{label.toLowerCase()}</span>{" "}
-              projects
+              <Trans i18nKey="home.viewAllTypeProjects">
+                View all <span className="text-indigo-600">{{ label }}</span>
+                projects
+              </Trans>
             </button>
           </div>
         </div>

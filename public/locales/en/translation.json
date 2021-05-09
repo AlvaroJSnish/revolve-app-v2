@@ -1,0 +1,24 @@
+{
+  "home": {
+    "welcome": "Welcome back, ",
+    "quickLook": "Take a quick look to your weekly overview",
+    "projectsTrained": "projects trained",
+    "viewAllTypeProjects": "View all <1>{{ type }}</1> projects",
+    "lastWeek": "Last week",
+    "thisWeek": "This week",
+    "evolution": "{{ label }} evolution",
+    "changesOn": "Changes on {{ label }} since last week",
+  },
+  "projects": {
+    "CLASSIFICATION": "CLASSIFICATION",
+    "REGRESSION": "REGRESSION",
+    "Regression": "Regression",
+    "Classification": "Classification",
+    "regression": "regression",
+    "classification": "classification",
+    "accuracy": "accuracy",
+    "Accuracy": "Accuracy",
+    "error": "error",
+    "Error": "Error"
+  }
+}

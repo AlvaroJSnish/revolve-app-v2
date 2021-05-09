@@ -1,15 +1,18 @@
 import { Line } from "react-chartjs-2";
+import { useTranslation } from "react-i18next";
+
 import { buildData, options, renderInfo } from "./utils";
 
 export function AccuracyChart({
   average_accuracy,
   last_week_average_accuracy,
 }) {
+  const { t } = useTranslation();
   const info = {
-    label: "Accuracy",
+    label: t("projects.Accuracy"),
     color: "rgba(116, 185, 255,1.0)",
     chartData: {
-      labels: ["", "Last week", "This week"],
+      labels: ["", t("home.lastWeek"), t("home.thisWeek")],
       data: [0, last_week_average_accuracy * 100, average_accuracy * 100, 100],
     },
   };
@@ -21,9 +24,10 @@ export function AccuracyChart({
         <Line data={data} options={options} />
       </div>
       {renderInfo({
-        label: "Accuracy",
+        label: t("projects.accuracy"),
         last_week_data: last_week_average_accuracy,
         average_data: average_accuracy,
+        labelToCompare: "accuracy",
       })}
     </div>
   );

@@ -1,3 +1,5 @@
+import { Trans } from "react-i18next";
+
 export const buildData = ({ chartData, label, color }) => ({
   labels: chartData.labels,
   datasets: [
@@ -48,12 +50,17 @@ export const options = {
 
 export const numberToFix = (number, fix) => (number || 0).toFixed(fix);
 
-export function renderInfo({ label, last_week_data = 0, average_data = 0 }) {
+export function renderInfo({
+  label,
+  last_week_data = 0,
+  average_data = 0,
+  labelToCompare,
+}) {
   function renderNumbers() {
     let ad = average_data;
     let lwad = last_week_data;
 
-    if (label === "Accuracy") {
+    if (labelToCompare === "accuracy") {
       ad = ad * 100;
       lwad = last_week_data * 100;
 
@@ -96,10 +103,12 @@ export function renderInfo({ label, last_week_data = 0, average_data = 0 }) {
     <div className="flex w-full md:w-1/2 p-10 bg-gray-50 text-gray-600 items-center">
       <div className="w-full">
         <h3 className="text-lg font-semibold leading-tight text-gray-800">
-          {label} evolution
+          <Trans i18nKey="home.evolution">{{ label }} evolution</Trans>
         </h3>
-        <h6 className="text-sm leading-tight mb-2 text-gray-400">
-          <span>Changes on {label.toLowerCase()} from last week</span>
+        <h6 className="text-sm leading-tight mt-1 mb-3 text-gray-400">
+          <Trans i18nKey="home.changesOn">
+            Changes on {{ label }} from last week
+          </Trans>
         </h6>
         <div className="flex w-full items-end mb-6">{renderNumbers()}</div>
       </div>
