@@ -57,3 +57,10 @@ export const clearNotifications = () => (dispatch) => {
     type: projectTypes.CLEAR_NOTIFICATIONS,
   });
 };
+
+export const selectProjectsToShow = (type) => (dispatch) => {
+  dispatch({
+    type: projectTypes.SELECT_PROJECTS_TO_SHOW,
+    payload: { type },
+  });
+};

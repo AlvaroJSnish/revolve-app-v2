@@ -34,5 +34,13 @@ export const initializeStore = (preloadedState) => {
 };
 
 export function useStore() {
-  return useMemo(() => initializeStore({}), []);
+  const authState = {};
+  const access_token = localStorage.getItem("access_token");
+  const user = localStorage.getItem("user");
+  if (access_token && user) {
+    authState["user"] = { ...JSON.parse(user) };
+    authState["access_token"] = JSON.parse(access_token);
+  }
+
+  return useMemo(() => initializeStore({ auth: { ...authState } }), []);
 }

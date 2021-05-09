@@ -1,4 +1,4 @@
-import { projectTypes } from "../types/ProjectTypes";
+import { projectTypes, types } from "../types/ProjectTypes";
 
 const initialState = {
   loadingProjects: false,
@@ -13,6 +13,8 @@ const initialState = {
   projectError: null,
 
   projectsTrainedNotifications: [],
+
+  projectsToShow: types.ALL,
 };
 
 export default function projectReducer(
@@ -89,6 +91,13 @@ export default function projectReducer(
       return {
         ...state,
         projectsTrainedNotifications: [],
+      };
+    }
+
+    case projectTypes.SELECT_PROJECTS_TO_SHOW: {
+      return {
+        ...state,
+        projectsToShow: payload.type,
       };
     }
 
