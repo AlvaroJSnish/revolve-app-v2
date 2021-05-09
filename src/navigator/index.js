@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,13 +12,15 @@ import { Signup } from "../containers/Auth/SignUp";
 
 export function Navigator() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={SignIn} />
-        <Route exact path="/signup" component={Signup} />
-        <PrivateRoute path="/app" component={Dashboard} />
-      </Switch>
-    </Router>
+    <Suspense fallback="loading...">
+      <Router>
+        <Switch>
+          <Route exact path="/" component={SignIn} />
+          <Route exact path="/signup" component={Signup} />
+          <PrivateRoute path="/app" component={Dashboard} />
+        </Switch>
+      </Router>
+    </Suspense>
   );
 }
 

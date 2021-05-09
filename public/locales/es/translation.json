@@ -1,4 +1,21 @@
 {
+  "auth": {
+    "emailAddress": "Email",
+    "password": "Contraseña",
+    "rememberMe": "Recuérdame",
+    "login": {
+      "signIn": "Inicia sesión con tu cuenta",
+      "14days": "o inicia tu período de prueba de 14 días",
+      "signInWith": "Inicia sesión con",
+      "continueWith": "O continua con",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "signInAction": "Inicia sesión"
+    },
+    "signup": {
+      "title": "Crea tu cuenta",
+      "backToLogin": "Volver al inicio de sesión"
+    }
+  },
   "home": {
     "welcome": "Hola de nuevo, ",
     "quickLook": "Echa un vistazo rápido a tu informe semanal",

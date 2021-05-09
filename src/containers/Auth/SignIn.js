@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { LoadingCircle } from "../../components";
 import { loginRequest } from "../../redux/actions/AuthActions";
 
 export function SignIn({ history }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const loadingSignIn = useSelector(
     (state) => state.auth.loadingSignIn,
@@ -39,15 +41,14 @@ export function SignIn({ history }) {
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Sign in to your account
+              {t("auth.login.signIn")}
             </h2>
             <p className="mt-2 text-sm text-gray-600 max-w">
-              Or{" "}
               <Link
                 to={"/signup"}
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                start your 14-day free trial
+                {t("auth.login.14days")}
               </Link>
             </p>
           </div>
@@ -56,7 +57,7 @@ export function SignIn({ history }) {
             <div>
               <div>
                 <p className="text-sm font-medium text-gray-700">
-                  Sign in with
+                  {t("auth.login.signInWith")}
                 </p>
 
                 <div className="mt-1 grid grid-cols-1 gap-1">
@@ -92,7 +93,7 @@ export function SignIn({ history }) {
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="px-2 bg-white text-gray-500">
-                    Or continue with
+                    {t("auth.login.continueWith")}
                   </span>
                 </div>
               </div>
@@ -105,7 +106,7 @@ export function SignIn({ history }) {
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Email address
+                    {t("auth.emailAddress")}
                   </label>
                   <div className="mt-1">
                     <input
@@ -126,7 +127,7 @@ export function SignIn({ history }) {
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Password
+                    {t("auth.password")}
                   </label>
                   <div className="mt-1">
                     <input
@@ -156,7 +157,7 @@ export function SignIn({ history }) {
                       htmlFor="remember_me"
                       className="ml-2 block text-sm text-gray-900"
                     >
-                      Remember me
+                      {t("auth.rememberMe")}
                     </label>
                   </div>
 
@@ -165,7 +166,7 @@ export function SignIn({ history }) {
                       to={"/"}
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
-                      Forgot your password?
+                      {t("auth.login.forgotPassword")}
                     </Link>
                   </div>
                 </div>
@@ -176,7 +177,7 @@ export function SignIn({ history }) {
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     {loadingSignIn && <LoadingCircle />}
-                    Sign in
+                    {t("auth.login.signInAction")}
                   </button>
                 </div>
               </form>

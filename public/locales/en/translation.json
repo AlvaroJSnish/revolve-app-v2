@@ -1,4 +1,21 @@
 {
+  "auth": {
+    "emailAddress": "Email",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "login": {
+      "signIn": "Sign in to your account",
+      "14days": "or start you free 14 days trial",
+      "signInWith": "Sign in with",
+      "continueWith": "Or continue with",
+      "forgotPassword": "Forgot your password?",
+      "signInAction": "Sign in"
+    },
+    "signup": {
+      "title": "Sign up",
+      "backToLogin": "Back to login"
+    }
+  },
   "home": {
     "welcome": "Welcome back, ",
     "quickLook": "Take a quick look to your weekly overview",

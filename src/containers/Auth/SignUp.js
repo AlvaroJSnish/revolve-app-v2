@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { LoadingCircle } from "../../components";
@@ -7,6 +8,7 @@ import { signupRequest } from "../../redux/actions/AuthActions";
 
 export function Signup({ history }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { loadingSignUp, signupError } = useSelector(
     (state) => state.auth,
     shallowEqual
@@ -39,7 +41,7 @@ export function Signup({ history }) {
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-              Sign up
+              {t("auth.signup.title")}
             </h2>
           </div>
 
@@ -51,7 +53,7 @@ export function Signup({ history }) {
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Email address
+                    {t("auth.emailAddress")}
                   </label>
                   <div className="mt-1">
                     <input
@@ -88,7 +90,7 @@ export function Signup({ history }) {
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Password
+                    {t("auth.password")}
                   </label>
                   <div className="mt-1">
                     <input
@@ -118,7 +120,7 @@ export function Signup({ history }) {
                       htmlFor="remember_me"
                       className="ml-2 block text-sm text-gray-900"
                     >
-                      Remember me
+                      {t("auth.rememberMe")}
                     </label>
                   </div>
                 </div>
@@ -129,7 +131,7 @@ export function Signup({ history }) {
                     className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     {loadingSignUp && <LoadingCircle />}
-                    Sign up
+                    {t("auth.signup.title")}
                   </button>
                 </div>
 
@@ -138,7 +140,7 @@ export function Signup({ history }) {
                     to={"/"}
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    Back to login
+                    {t("auth.signup.backToLogin")}
                   </Link>
                 </div>
               </form>
