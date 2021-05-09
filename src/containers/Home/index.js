@@ -19,7 +19,7 @@ export function Home() {
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <h3 className="text-2xl leading-6 font-medium text-gray-900">
             <span className="text-gray-500">Welcome back,</span>{" "}
-            {user.email.split("@")[0]}
+            {user.username || user.email.split("@")[0]}
           </h3>
           <h4 className="pt-4 pb-10 text-gray-600">
             Take a quick look to your weekly overview

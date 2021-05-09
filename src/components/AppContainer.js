@@ -1,11 +1,12 @@
 import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { SectionHeader } from "./SectionHeader";
 import { clearNotifications } from "../redux/actions/ProjectActions";
+import { logout } from "../redux/actions/AuthActions";
 
 const navigation = [
   { name: "Dashboard", path: "/app" },
@@ -15,7 +16,7 @@ const navigation = [
 const userNavigation = [
   { name: "Your Profile", path: "/app/account" },
   { name: "Settings", path: "/app/settings" },
-  // { name: "Sign out", path: "/signout" },
+  { name: "Sign out", path: "/signout" },
 ];
 
 function classNames(...classes) {
@@ -23,6 +24,7 @@ function classNames(...classes) {
 }
 
 export function AppContainer({ children }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { projectsTrainedNotifications } = useSelector(
     (state) => state.projects,
@@ -98,6 +100,10 @@ export function AppContainer({ children }) {
     );
   }
 
+  async function handleLogout() {
+    dispatch(logout(history));
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Disclosure as="nav" className="bg-white">
@@ -152,7 +158,7 @@ export function AppContainer({ children }) {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              src={user.imageUrl}
+                              src={user.avatar}
                               alt=""
                             />
                           </Menu.Button>
@@ -171,21 +177,41 @@ export function AppContainer({ children }) {
                             static
                             className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                           >
-                            {userNavigation.map((item) => (
-                              <Menu.Item key={item.name}>
-                                {({ active }) => (
-                                  <Link
-                                    to={item.path}
-                                    className={classNames(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700"
+                            {userNavigation.map((item) => {
+                              if (item.path === "/signout") {
+                                return (
+                                  <Menu.Item key={item.name}>
+                                    {({ active }) => (
+                                      <span
+                                        onClick={handleLogout}
+                                        className={classNames(
+                                          active ? "bg-gray-100" : "",
+                                          "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                                        )}
+                                      >
+                                        {item.name}
+                                      </span>
                                     )}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                )}
-                              </Menu.Item>
-                            ))}
+                                  </Menu.Item>
+                                );
+                              }
+
+                              return (
+                                <Menu.Item key={item.name}>
+                                  {({ active }) => (
+                                    <Link
+                                      to={item.path}
+                                      className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm text-gray-700"
+                                      )}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  )}
+                                </Menu.Item>
+                              );
+                            })}
                           </Menu.Items>
                         </Transition>
                       </>
@@ -233,13 +259,13 @@ export function AppContainer({ children }) {
                   <div className="flex-shrink-0">
                     <img
                       className="h-10 w-10 rounded-full"
-                      src={user.imageUrl}
+                      src={user.avatar}
                       alt=""
                     />
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-medium text-gray-800">
-                      {user.email}
+                      {user.username || user.username}
                     </div>
                     <div className="text-sm font-medium text-gray-500">
                       {user.email}
@@ -251,15 +277,29 @@ export function AppContainer({ children }) {
                   </button>
                 </div>
                 <div className="mt-3 space-y-1">
-                  {userNavigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                  {userNavigation.map((item) => {
+                    if (item.path === "/signout") {
+                      return (
+                        <button
+                          key={item.name}
+                          onClick={handleLogout}
+                          className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                        >
+                          {item.name}
+                        </button>
+                      );
+                    }
+
+                    return (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </Disclosure.Panel>

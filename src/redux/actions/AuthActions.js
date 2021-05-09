@@ -12,6 +12,7 @@ export const loginRequest = (email, password, history) => (dispatch) => {
 
 const login = (email, password, history) => async (dispatch) => {
   try {
+    localStorage.clear();
     const res = await (await post("auth/signin", { email, password })).data;
 
     saveToStorage("access_token", res.access_token);
@@ -41,6 +42,7 @@ export const signupRequest = (email, password, history) => (dispatch) => {
 
 const signup = (email, password, history) => async (dispatch) => {
   try {
+    localStorage.clear();
     const res = await (await post("auth/signup", { email, password })).data;
 
     saveToStorage("access_token", res.access_token);
@@ -55,6 +57,22 @@ const signup = (email, password, history) => async (dispatch) => {
   } catch (e) {
     return dispatch({
       type: authTypes.SIGNUP_FAILURE,
+      payload: { error: e.response.data },
+    });
+  }
+};
+
+export const logout = (history) => async (dispatch) => {
+  try {
+    await post("auth/signout");
+    localStorage.clear();
+    history.push("/");
+    dispatch({
+      type: authTypes.LOGOUT_SUCCESS,
+    });
+  } catch (e) {
+    dispatch({
+      type: authTypes.LOGOUT_FAILURE,
       payload: { error: e.response.data },
     });
   }

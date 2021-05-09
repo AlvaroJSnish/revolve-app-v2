@@ -7,6 +7,7 @@ const initialState = {
   signInError: null,
   loadingSignUp: false,
   signUpError: null,
+  logoutError: null,
 };
 
 export default function AuthReducer(state = initialState, { type, payload }) {
@@ -45,6 +46,14 @@ export default function AuthReducer(state = initialState, { type, payload }) {
 
     case authTypes.SIGNUP_FAILURE: {
       return { ...state, signUpError: payload.error, loadingSignUp: false };
+    }
+
+    case authTypes.LOGOUT_SUCCESS: {
+      return { ...state, user: {}, access_token: null };
+    }
+
+    case authTypes.LOGOUT_FAILURE: {
+      return { ...state, logoutError: payload.error };
     }
 
     default: {
