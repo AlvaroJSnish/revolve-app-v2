@@ -74,5 +74,24 @@
       "view": "Show"
     },
     "watchingProjects": "Watching <1></1> projects"
+  },
+  "newProject": {
+    "project": "Project",
+    "infoAboutProject": "Information about the project",
+    "name": "Project name",
+    "namePlaceholder": "Wine quality, house prices...",
+    "save": "Save",
+    "data": {
+      "projectData": "Project data",
+      "projectDataLabel": "Now we collect data to create the project",
+      "uploadFile": "Upload a file",
+      "dragAndDrop": "or drag and drop",
+      "upTo100MB": "CSV up to 100MB"
+    },
+    "train": {
+      "train": "Train",
+      "lastStep": "Last step to train a model",
+      "title": "We are ready now to train our model!"
+    }
   }
 }
