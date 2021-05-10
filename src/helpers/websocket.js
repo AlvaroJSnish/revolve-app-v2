@@ -1,9 +1,6 @@
 import { store } from "../redux/store";
 import { connectWebsocket } from "../redux/actions/WebsocketActions";
-import {
-  fetchProjects,
-  updateProjectFromWS,
-} from "../redux/actions/ProjectActions";
+import { updateProjectFromWS } from "../redux/actions/ProjectActions";
 
 export function onConnectWebsocket() {
   const access_token = localStorage.getItem("access_token");

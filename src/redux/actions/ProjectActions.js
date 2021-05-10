@@ -31,15 +31,15 @@ export const fetchProjectRequest = (id) => (dispatch) => {
 };
 
 export const fetchProject = (id) => async (dispatch) => {
-  const projects = await (await get(`projects/${id}`)).data;
+  const project = await (await get(`projects/${id}`)).data;
   try {
     dispatch({
-      type: projectTypes.FETCH_PROJECTS_SUCCESS,
-      payload: { projects },
+      type: projectTypes.FETCH_PROJECT_SUCCESS,
+      payload: { project },
     });
   } catch (e) {
     dispatch({
-      type: projectTypes.FETCH_PROJECTS_FAILURE,
+      type: projectTypes.FETCH_PROJECT_FAILURE,
       payload: { error: e },
     });
   }

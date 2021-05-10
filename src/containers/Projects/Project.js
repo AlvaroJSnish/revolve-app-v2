@@ -1,108 +1,159 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { PaperClipIcon } from "@heroicons/react/solid";
+
 import { fetchProjectRequest } from "../../redux/actions/ProjectActions";
+import { useTranslation } from "react-i18next";
+import { Charts } from "./components/Charts";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export function Project() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const { t } = useTranslation();
+  const { project } = useSelector((state) => state.projects, shallowEqual);
 
   useEffect(() => {
     dispatch(fetchProjectRequest(id));
   }, [id]);
 
+  if (!project) {
+    return <h1>Loading..</h1>;
+  }
+
+  const { project_configuration } = project;
+  const { configuration_file } = project_configuration;
+
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-      <div className="px-4 py-5 sm:px-6">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">
-          Applicant Information
-        </h3>
-        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-          Personal details and application.
-        </p>
+    <div>
+      <Header name={project.project_name} />
+      <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <CardAccuracy
+          label={t("projects.Accuracy")}
+          value={project_configuration.accuracy}
+        />
+        <CardError
+          label={t("projects.Error")}
+          value={project_configuration.error}
+        />
+      </dl>
+      <Correlation
+        correlation={project_configuration.correlation}
+        configurationFile={configuration_file}
+      />
+    </div>
+  );
+}
+
+function Header({ name, id }) {
+  const { t } = useTranslation();
+  return (
+    <div className="md:flex md:items-center md:justify-between mt-8 mb-8">
+      <div className="flex-1 min-w-0">
+        <h2 className="text-xl font-bold leading-7 text-gray-700 sm:text-3xl sm:truncate">
+          {name}
+        </h2>
       </div>
-      <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-        <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-          <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500">Full name</dt>
-            <dd className="mt-1 text-sm text-gray-900">Margot Foster</dd>
-          </div>
-          <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500">
-              Application for
-            </dt>
-            <dd className="mt-1 text-sm text-gray-900">Backend Developer</dd>
-          </div>
-          <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500">Email address</dt>
-            <dd className="mt-1 text-sm text-gray-900">
-              margotfoster@example.com
-            </dd>
-          </div>
-          <div className="sm:col-span-1">
-            <dt className="text-sm font-medium text-gray-500">
-              Salary expectation
-            </dt>
-            <dd className="mt-1 text-sm text-gray-900">$120,000</dd>
-          </div>
-          <div className="sm:col-span-2">
-            <dt className="text-sm font-medium text-gray-500">About</dt>
-            <dd className="mt-1 text-sm text-gray-900">
-              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
-              incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
-              consequat sint. Sit id mollit nulla mollit nostrud in ea officia
-              proident. Irure nostrud pariatur mollit ad adipisicing
-              reprehenderit deserunt qui eu.
-            </dd>
-          </div>
-          <div className="sm:col-span-2">
-            <dt className="text-sm font-medium text-gray-500">Attachments</dt>
-            <dd className="mt-1 text-sm text-gray-900">
-              <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-                <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                  <div className="w-0 flex-1 flex items-center">
-                    <PaperClipIcon
-                      className="flex-shrink-0 h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    <span className="ml-2 flex-1 w-0 truncate">
-                      resume_back_end_developer.pdf
-                    </span>
-                  </div>
-                  <div className="ml-4 flex-shrink-0">
-                    <a
-                      href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Download
-                    </a>
-                  </div>
-                </li>
-                <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                  <div className="w-0 flex-1 flex items-center">
-                    <PaperClipIcon
-                      className="flex-shrink-0 h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                    <span className="ml-2 flex-1 w-0 truncate">
-                      coverletter_back_end_developer.pdf
-                    </span>
-                  </div>
-                  <div className="ml-4 flex-shrink-0">
-                    <a
-                      href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Download
-                    </a>
-                  </div>
-                </li>
-              </ul>
-            </dd>
-          </div>
-        </dl>
+      <div className="mt-4 flex md:mt-0 md:ml-4">
+        <button
+          type="button"
+          className="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          {t("project.delete")}
+        </button>
       </div>
     </div>
   );
+}
+
+function CardAccuracy({ label, value }) {
+  return (
+    <div key={label} className="py-5 bg-white rounded-lg overflow-hidden">
+      <dt className="text-sm font-medium text-gray-500 truncate">{label}</dt>
+      <dd className="mt-1 text-3xl font-semibold text-gray-900">
+        {(value * 100).toFixed(2)}%
+      </dd>
+    </div>
+  );
+}
+
+function CardError({ label, value }) {
+  return (
+    <div key={label} className="py-5 bg-white rounded-lg overflow-hidden">
+      <dt className="text-sm font-medium text-gray-500 truncate">{label}</dt>
+      <dd className="mt-1 text-3xl font-semibold text-gray-900">
+        {value.toFixed(2)}
+      </dd>
+    </div>
+  );
+}
+
+function Correlation({ correlation, configurationFile }) {
+  const { t } = useTranslation();
+
+  if (correlation && configurationFile) {
+    const { saved_columns, final_data, label, final_label } = configurationFile;
+    let correlation_array = [];
+    for (const property in correlation) {
+      correlation_array.push([property, correlation[property]]);
+    }
+
+    correlation_array.pop();
+
+    let sorted_correlation = correlation_array.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+
+    sorted_correlation = sorted_correlation.filter((c) => c[1] > 0);
+    const filteredColumns = saved_columns.filter((c) => c !== label);
+
+    const data = [];
+    final_data.forEach((d, k) => {
+      const row = {};
+      d.forEach((j, i) => {
+        row[filteredColumns[i]] = j;
+      });
+      data.push({ ...row, [label]: final_label[k] });
+    });
+
+    return (
+      <div>
+        <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+          {t("project.correlation")}
+        </h2>
+        <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {sorted_correlation.map((corr) => (
+            <li key={corr[0]} className="col-span-1 flex shadow-sm rounded-md">
+              <div
+                className={classNames(
+                  "py-2 px-2 bg-gray-50",
+                  "flex-shrink-0 justify-center w-32 h-20 text-white text-sm font-medium rounded-l-md text-indigo-600"
+                )}
+              >
+                {corr[0]}
+              </div>
+              <div className="flex-1 flex items-center justify-between bg-white rounded-r-md truncate">
+                <div className="flex-1 px-4 py-2 text-sm truncate">
+                  <p className="text-2xl text-gray-500">{corr[1].toFixed(2)}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <Charts
+          sorted_correlation={sorted_correlation}
+          correlation_array={correlation_array}
+          correlation={correlation}
+          filteredColumns={filteredColumns}
+          label={label}
+          data={data}
+        />
+      </div>
+    );
+  }
+
+  return null;
 }

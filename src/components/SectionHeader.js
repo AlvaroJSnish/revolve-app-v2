@@ -34,8 +34,6 @@ export function SectionHeader() {
       return { page: pageAcc, route: page };
     });
 
-    console.log(pages);
-
     return (
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-4">

@@ -93,5 +93,10 @@
       "lastStep": "Last step to train a model",
       "title": "We are ready now to train our model!"
     }
+  },
+  "project": {
+    "delete": "Delete",
+    "correlation": "Correlation",
+    "watchingCharts": "Showing <1></1> charts"
   }
 }

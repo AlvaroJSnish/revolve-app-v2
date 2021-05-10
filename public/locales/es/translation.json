@@ -93,5 +93,10 @@
       "lastStep": "Último paso para crear un modelo",
       "title": "¡Estamos listos para entrenar nuestro modelo!"
     }
+  },
+  "project": {
+    "delete": "Borrar",
+    "correlation": "Correlación",
+    "watchingCharts": "Mostrar gráficas de tipo <1></1>"
   }
 }
