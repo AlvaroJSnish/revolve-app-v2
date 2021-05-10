@@ -99,7 +99,9 @@ export function Projects() {
             onChange={handleProjectTypes}
           >
             {pt.map((option) => (
-              <option key={option.id}>{t(`projects.${option.label}`)}</option>
+              <option key={option.id} value={option.label}>
+                {t(`projects.${option.label}`)}
+              </option>
             ))}
           </select>
           projects
