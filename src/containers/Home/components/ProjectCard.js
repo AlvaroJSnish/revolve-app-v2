@@ -15,6 +15,8 @@ export function ProjectCard({
   const { t } = useTranslation();
   const { path } = useRouteMatch();
 
+  const lblc = label.toLowerCase();
+
   function onNavigate() {
     dispatch(selectProjectsToShow(type));
     history.push(`${path}/projects`);
@@ -54,7 +56,7 @@ export function ProjectCard({
               className="font-medium  hover:text-indigo-600"
             >
               <Trans i18nKey="home.viewAllTypeProjects">
-                View all <span className="text-indigo-600">{{ label }}</span>
+                View all <span className="text-indigo-600">{{ lblc }}</span>
                 projects
               </Trans>
             </button>
