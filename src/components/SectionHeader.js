@@ -3,6 +3,10 @@ import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { HomeIcon } from "@heroicons/react/solid";
 import { useTranslation } from "react-i18next";
 
+const uuidRegex = new RegExp(
+  /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
+);
+
 export function SectionHeader() {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
@@ -20,6 +24,18 @@ export function SectionHeader() {
       pages.shift();
     }
 
+    let pageAcc = "";
+    pages = pages.map((page, i) => {
+      if (i === 0) {
+        pageAcc += page + "/";
+        return { page, route: page };
+      }
+      pageAcc += page;
+      return { page: pageAcc, route: page };
+    });
+
+    console.log(pages);
+
     return (
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="flex items-center space-x-4">
@@ -34,7 +50,7 @@ export function SectionHeader() {
               </Link>
             </div>
           </li>
-          {pages.map((page) => (
+          {pages.map(({ page, route }) => (
             <li key={page}>
               <div className="flex items-center">
                 <svg
@@ -51,7 +67,7 @@ export function SectionHeader() {
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
                   aria-current={page.current ? "page" : undefined}
                 >
-                  {t(`breadcrumbs.${page}`)}
+                  {uuidRegex.test(route) ? route : t(`breadcrumbs.${route}`)}
                 </Link>
               </div>
             </li>
