@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import { LoadingCircle } from "../../../components";
 
 export function ProjectData({
@@ -15,6 +17,8 @@ export function ProjectData({
   label,
   loadingProjectData,
 }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <div
@@ -26,10 +30,10 @@ export function ProjectData({
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
               <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Project data
+                {t("newProject.data.projectData")}
               </h3>
               <p className="mt-1 text-sm text-gray-600">
-                Now we need to collect data to create a model
+                {t("newProject.data.projectDataLabel")}
               </p>
             </div>
           </div>
@@ -60,7 +64,7 @@ export function ProjectData({
                             htmlFor="file-upload"
                             className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                           >
-                            <span>Upload a file</span>
+                            <span>{t("newProject.data.uploadFile")}</span>
                             <input
                               id="file-upload"
                               name="file-upload"
@@ -69,7 +73,9 @@ export function ProjectData({
                               onChange={handleFile}
                             />
                           </label>
-                          <p className="pl-1">or drag and drop</p>
+                          <p className="pl-1">
+                            {t("newProject.data.dragAndDrop")}
+                          </p>
                         </div>
                         {selectedFile.name ? (
                           <p className="text-xs text-gray-500">
@@ -77,7 +83,7 @@ export function ProjectData({
                           </p>
                         ) : (
                           <p className="text-xs text-gray-500">
-                            CSV up to 100MB
+                            {t("newProject.data.upTo100MB")}
                           </p>
                         )}
                       </div>
@@ -133,10 +139,11 @@ export function ProjectData({
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button
                     type="submit"
+                    disabled={label}
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     {loadingProjectData && <LoadingCircle />}
-                    Save
+                    {t("newProject.save")}
                   </button>
                 </div>
               </div>

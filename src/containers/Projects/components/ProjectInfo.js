@@ -1,10 +1,11 @@
 import Lottie from "react-lottie";
+import { useTranslation } from "react-i18next";
+
 import { LoadingCircle } from "../../../components";
 import {
   regressionIllustration,
   classificationIllustration,
 } from "../../../animations";
-import { post } from "../../../helpers/api";
 
 const projectTypes = [
   {
@@ -12,12 +13,14 @@ const projectTypes = [
     name: "REGRESSION",
     illustration: regressionIllustration,
     disabled: false,
+    locale: "projects.Regression",
   },
   {
     id: 2,
     name: "CLASSIFICATION",
     illustration: classificationIllustration,
     disabled: true,
+    locale: "projects.Classification",
   },
 ];
 
@@ -34,6 +37,8 @@ export function ProjectInfo({
   selectedType,
   loadingProjectInfo,
 }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="py-5">
@@ -41,10 +46,10 @@ export function ProjectInfo({
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
               <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Project
+                {t("newProject.project")}
               </h3>
               <p className="mt-1 text-sm text-gray-600">
-                Information about the project
+                {t("newProject.infoAboutProject")}
               </p>
             </div>
           </div>
@@ -58,7 +63,7 @@ export function ProjectInfo({
                         htmlFor="company_website"
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Project name
+                        {t("newProject.name")}
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <input
@@ -66,7 +71,7 @@ export function ProjectInfo({
                           name="project_name"
                           id="project_name"
                           className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-md sm:text-sm border-gray-300"
-                          placeholder="Wine quality, houses prices, ..."
+                          placeholder={t("newProject.namePlaceholder")}
                           onChange={(e) => setName(e.target.value)}
                         />
                       </div>
@@ -99,7 +104,7 @@ export function ProjectInfo({
                                 : "text-gray-900"
                             }`}
                           >
-                            {type.name}
+                            {t(type.locale)}
                           </h3>
                         </div>
                       ))}
@@ -118,7 +123,7 @@ export function ProjectInfo({
                     `}
                   >
                     {loadingProjectInfo ? <LoadingCircle /> : null}
-                    Save
+                    {t("newProject.save")}
                   </button>
                 </div>
               </div>

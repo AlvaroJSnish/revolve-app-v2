@@ -53,6 +53,45 @@
     "accuracy": "precisión",
     "Accuracy": "Precisión",
     "error": "error",
-    "Error": "Error"
+    "Error": "Error",
+    "all": "todos",
+    "newProject": "Nuevo proyecto",
+    "table": {
+      "status": {
+        "failure": "Fallo",
+        "pending": "Pendiente",
+        "success": "Completo"
+      },
+      "header": {
+        "name": "Nombre",
+        "currentStatus": "Estado actual",
+        "accuracy": "Precisión (%)",
+        "lastTimeTrained": "Entrenado última vez"
+      },
+      "trained": "Entrenado",
+      "notTrained": "No entrenado",
+      "edit": "Editar",
+      "view": "Ver"
+    },
+    "watchingProjects": "Viendo proyectos de <1></1>"
+  },
+  "newProject": {
+    "project": "Proyecto",
+    "infoAboutProject": "Información sobre el proyecto",
+    "name": "Nombre del proyecto",
+    "namePlaceholder": "Calidad del vino, precio de las casas...",
+    "save": "Guardar",
+    "data": {
+      "projectData": "Datos del proyecto",
+      "projectDataLabel": "Ahora necesitamos recolectar datos para crear tu modelo",
+      "uploadFile": "Sube un archivo",
+      "dragAndDrop": "o arrastra y suéltalo",
+      "upTo100MB": "CSV de hasta 100MB"
+    },
+    "train": {
+      "train": "Entrenar",
+      "lastStep": "Último paso para crear un modelo",
+      "title": "¡Estamos listos para entrenar nuestro modelo!"
+    }
   }
 }

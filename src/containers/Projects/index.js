@@ -1,6 +1,7 @@
 import deepEqual from "deep-equal";
 import { useEffect } from "react";
 import { format } from "date-fns";
+import { useTranslation, Trans } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,6 +13,7 @@ import {
 
 export function Projects() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { path } = useRouteMatch();
 
   const { projects, projectsToShow } = useSelector(
@@ -28,7 +30,7 @@ export function Projects() {
       case "FAILURE": {
         return (
           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-            Failure
+            {t("projects.table.status.failure")}
           </span>
         );
       }
@@ -36,7 +38,7 @@ export function Projects() {
       case "PENDING": {
         return (
           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-            Pending
+            {t("projects.table.status.pending")}
           </span>
         );
       }
@@ -45,7 +47,7 @@ export function Projects() {
       default: {
         return (
           <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-            Success
+            {t("projects.table.status.success")}
           </span>
         );
       }
@@ -56,7 +58,7 @@ export function Projects() {
     if (status === "PENDING") {
       return (
         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-          Training
+          {t("projects.table.status.pending")}
         </span>
       );
     }
@@ -64,14 +66,14 @@ export function Projects() {
     if (trained) {
       return (
         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-          Trained
+          {t("projects.table.trained")}
         </span>
       );
     }
 
     return (
       <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-        Not trained
+        {t("projects.table.notTrained")}
       </span>
     );
   }
@@ -89,17 +91,19 @@ export function Projects() {
 
     return (
       <h1 className="mt-2 mb-4">
-        Watching{" "}
-        <select
-          className="text-indigo-500 border-0"
-          value={projectsToShow.toLowerCase()}
-          onChange={handleProjectTypes}
-        >
-          {pt.map((option) => (
-            <option key={option.id}>{option.label}</option>
-          ))}
-        </select>{" "}
-        projects
+        <Trans i18nKey="projects.watchingProjects">
+          Watching
+          <select
+            className="text-indigo-500 border-0"
+            value={projectsToShow.toLowerCase()}
+            onChange={handleProjectTypes}
+          >
+            {pt.map((option) => (
+              <option key={option.id}>{t(`projects.${option.label}`)}</option>
+            ))}
+          </select>
+          projects
+        </Trans>
       </h1>
     );
   }
@@ -117,43 +121,43 @@ export function Projects() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Name
+                    {t("projects.table.header.name")}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Current status
+                    {t("projects.table.header.currentStatus")}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Trained
+                    {t("projects.table.trained")}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Accuracy (%)
+                    {t("projects.table.header.accuracy")}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Error
+                    {t("projects.Error")}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Last time trained
+                    {t("projects.table.header.lastTimeTrained")}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    <span className="sr-only">Edit</span>
+                    <span className="sr-only">{t("projects.table.edit")}</span>
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    <span className="sr-only">View</span>
+                    <span className="sr-only">{t("projects.table.view")}</span>
                   </th>
                 </tr>
               </thead>
@@ -210,7 +214,7 @@ export function Projects() {
                           to={`${path}/${project.project}`}
                           className="text-indigo-600 hover:text-indigo-900"
                         >
-                          Edit
+                          {t("projects.table.edit")}
                         </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -218,7 +222,7 @@ export function Projects() {
                           to={`${path}/${project.project}`}
                           className="text-indigo-600 hover:text-indigo-900"
                         >
-                          View
+                          {t("projects.table.view")}
                         </Link>
                       </td>
                     </tr>

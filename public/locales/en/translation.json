@@ -53,6 +53,26 @@
     "accuracy": "accuracy",
     "Accuracy": "Accuracy",
     "error": "error",
-    "Error": "Error"
+    "Error": "Error",
+    "all": "all",
+    "newProject": "New project",
+    "table": {
+      "status": {
+        "failure": "Failure",
+        "pending": "Pending",
+        "success": "Success"
+      },
+      "header": {
+        "name": "Name",
+        "currentStatus": "Current status",
+        "accuracy": "Accuracy (%)",
+        "lastTimeTrained": "Last time trained"
+      },
+      "trained": "Trained",
+      "notTrained": "Not trained",
+      "edit": "Edit",
+      "view": "Show"
+    },
+    "watchingProjects": "Watching <1></1> projects"
   }
 }
