@@ -1,22 +1,23 @@
 import { Fragment } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation, Trans } from "react-i18next";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { SectionHeader } from "./SectionHeader";
-import { clearNotifications } from "../redux/actions/ProjectActions";
 import { logout } from "../redux/actions/AuthActions";
+import { clearNotifications } from "../redux/actions/ProjectActions";
 
 const navigation = [
-  { name: "Dashboard", path: "/app" },
-  { name: "Projects", path: "/app/projects" },
+  { name: "Dashboard", path: "/app", locale: "nav.dashboard" },
+  { name: "Projects", path: "/app/projects", locale: "nav.projects" },
 ];
 
 const userNavigation = [
-  { name: "Your Profile", path: "/app/account" },
-  { name: "Settings", path: "/app/settings" },
-  { name: "Sign out", path: "/signout" },
+  { name: "Your Profile", path: "/app/account", locale: "nav.profile" },
+  { name: "Settings", path: "/app/settings", locale: "nav.settings" },
+  { name: "Sign out", path: "/signout", locale: "nav.signout" },
 ];
 
 function classNames(...classes) {
@@ -26,6 +27,7 @@ function classNames(...classes) {
 export function AppContainer({ children }) {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { projectsTrainedNotifications } = useSelector(
     (state) => state.projects,
     shallowEqual
@@ -77,7 +79,12 @@ export function AppContainer({ children }) {
                           "block px-4 py-2 text-sm text-gray-700"
                         )}
                       >
-                        Your project {item} has been trained successfully!
+                        <Trans
+                          i18nKey="notifications.trainedSuccessfully"
+                          item={item}
+                        >
+                          Your project {{ item }} has been trained successfully!
+                        </Trans>
                       </span>
                     )}
                   </Menu.Item>
@@ -88,7 +95,7 @@ export function AppContainer({ children }) {
                       onClick={handleNotifications}
                       className="text-gray-400 text-sm ml-60"
                     >
-                      Clear notifications
+                      {t("notifications.clearNotifications")}
                     </button>
                   </Menu.Item>
                 ) : null}
@@ -141,7 +148,7 @@ export function AppContainer({ children }) {
                             : undefined
                         }
                       >
-                        {item.name}
+                        {t(item.locale)}
                       </Link>
                     ))}
                   </div>
@@ -189,7 +196,7 @@ export function AppContainer({ children }) {
                                           "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                                         )}
                                       >
-                                        {item.name}
+                                        {t(item.locale)}
                                       </span>
                                     )}
                                   </Menu.Item>
@@ -206,7 +213,7 @@ export function AppContainer({ children }) {
                                         "block px-4 py-2 text-sm text-gray-700"
                                       )}
                                     >
-                                      {item.name}
+                                      {t(item.locale)}
                                     </Link>
                                   )}
                                 </Menu.Item>
@@ -250,7 +257,7 @@ export function AppContainer({ children }) {
                         : undefined
                     }
                   >
-                    {item.name}
+                    {t(item.locale)}
                   </Link>
                 ))}
               </div>
@@ -285,7 +292,7 @@ export function AppContainer({ children }) {
                           onClick={handleLogout}
                           className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
                         >
-                          {item.name}
+                          {t(item.locale)}
                         </button>
                       );
                     }
@@ -296,7 +303,7 @@ export function AppContainer({ children }) {
                         to={item.path}
                         className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
                       >
-                        {item.name}
+                        {t(item.locale)}
                       </Link>
                     );
                   })}

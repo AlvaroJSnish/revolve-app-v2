@@ -1,8 +1,10 @@
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
 
 import { HomeIcon } from "@heroicons/react/solid";
+import { useTranslation } from "react-i18next";
 
 export function SectionHeader() {
+  const { t } = useTranslation();
   const { path } = useRouteMatch();
   const { pathname } = useLocation();
 
@@ -49,7 +51,7 @@ export function SectionHeader() {
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
                   aria-current={page.current ? "page" : undefined}
                 >
-                  {page}
+                  {t(`breadcrumbs.${page}`)}
                 </Link>
               </div>
             </li>

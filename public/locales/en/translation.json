@@ -16,6 +16,23 @@
       "backToLogin": "Back to login"
     }
   },
+  "breadcrumbs": {
+    "projects": "projects",
+    "new-project": "new project",
+    "account": "account",
+    "settings": "settings"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "signout": "Sign out",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "notifications": {
+    "clearNotifications": "Clear notifications",
+    "trainedSuccessfully": "Your project {{ item }} has been trained successfully!"
+  },
   "home": {
     "welcome": "Welcome back, ",
     "quickLook": "Take a quick look to your weekly overview",

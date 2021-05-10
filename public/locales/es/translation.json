@@ -16,6 +16,23 @@
       "backToLogin": "Volver al inicio de sesión"
     }
   },
+  "breadcrumbs": {
+    "projects": "proyectos",
+    "new-project": "nuevo proyecto",
+    "account": "cuenta",
+    "settings": "ajustes"
+  },
+  "nav": {
+    "dashboard": "Inicio",
+    "projects": "Proyectos",
+    "signout": "Cerrar sesión",
+    "profile": "Perfil",
+    "settings": "Ajustes"
+  },
+  "notifications": {
+    "clearNotifications": "Limpiar notificaciones",
+    "trainedSuccessfully": "¡Tu proyecto {{ item }} se ha entrenado correctamente!"
+  },
   "home": {
     "welcome": "Hola de nuevo, ",
     "quickLook": "Echa un vistazo rápido a tu informe semanal",
