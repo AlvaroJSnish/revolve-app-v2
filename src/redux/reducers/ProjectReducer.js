@@ -35,7 +35,7 @@ export default function projectReducer(
           results: [
             ...payload.projects.results.map((result) => ({
               project_name: result.project_name,
-              ...result.project_configuration[0],
+              ...result.project_configuration,
               ...result,
             })),
           ],
@@ -73,7 +73,7 @@ export default function projectReducer(
               if (project.project === payload.project.id) {
                 return {
                   project_name: payload.project.project_name,
-                  ...payload.project.project_configuration[0],
+                  ...payload.project.project_configuration,
                 };
               }
               return { ...project };

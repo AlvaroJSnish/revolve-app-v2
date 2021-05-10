@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { useRouteMatch } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { PaperClipIcon } from "@heroicons/react/solid";
 import { fetchProjectRequest } from "../../redux/actions/ProjectActions";
 
 export function Project() {
   const dispatch = useDispatch();
-  const { params } = useRouteMatch();
+  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchProjectRequest(params.id));
-  }, []);
+    dispatch(fetchProjectRequest(id));
+  }, [id]);
 
   return (
     <div className="bg-white shadow overflow-hidden sm:rounded-lg">
