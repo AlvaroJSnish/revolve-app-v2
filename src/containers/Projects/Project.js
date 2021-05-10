@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import { fetchProjectRequest } from "../../redux/actions/ProjectActions";
 import { useTranslation } from "react-i18next";
 import { Charts } from "./components/Charts";
+import { deletes } from "../../helpers/api";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -29,7 +30,7 @@ export function Project() {
 
   return (
     <div>
-      <Header name={project.project_name} />
+      <Header name={project.project_name} projectId={project.id} />
       <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
         <CardAccuracy
           label={t("projects.Accuracy")}
@@ -48,8 +49,15 @@ export function Project() {
   );
 }
 
-function Header({ name, id }) {
+function Header({ name, projectId }) {
   const { t } = useTranslation();
+  const history = useHistory();
+
+  async function handleDelete() {
+    await deletes(`projects/${projectId}`);
+    history.push("/app/projects");
+  }
+
   return (
     <div className="md:flex md:items-center md:justify-between mt-8 mb-8">
       <div className="flex-1 min-w-0">
@@ -60,6 +68,7 @@ function Header({ name, id }) {
       <div className="mt-4 flex md:mt-0 md:ml-4">
         <button
           type="button"
+          onClick={handleDelete}
           className="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           {t("project.delete")}
