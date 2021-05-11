@@ -1,5 +1,5 @@
 import { projectTypes } from "../types/ProjectTypes";
-import { get } from "../../helpers/api";
+import { get, post } from "../../helpers/api";
 
 export const fetchProjectsRequest = () => (dispatch) => {
   dispatch({
@@ -63,4 +63,32 @@ export const selectProjectsToShow = (type) => (dispatch) => {
     type: projectTypes.SELECT_PROJECTS_TO_SHOW,
     payload: { type },
   });
+};
+
+export const makePredictionRequest = (values, id) => (dispatch) => {
+  dispatch({
+    type: projectTypes.MAKE_PREDICTION_REQUEST,
+  });
+
+  dispatch(makePrediction(values, id));
+};
+
+export const makePrediction = (values, id) => async (dispatch) => {
+  try {
+    const data = await (
+      await post(`projects/${id}/predict`, {
+        values,
+      })
+    ).data;
+
+    dispatch({
+      type: projectTypes.MAKE_PREDICTION_SUCCESS,
+      payload: data.prediction,
+    });
+  } catch (e) {
+    dispatch({
+      type: projectTypes.MAKE_PREDICTION_FAILURE,
+      payload: { error: e },
+    });
+  }
 };

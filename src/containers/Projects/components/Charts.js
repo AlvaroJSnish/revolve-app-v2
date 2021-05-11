@@ -17,7 +17,7 @@ export function Charts({
   correlation_array,
   correlation,
 }) {
-  const [chartsToShow, setChartsToShow] = useState("radar");
+  const [chartsToShow, setChartsToShow] = useState("scatter");
 
   function handleSelectCharts(e) {
     setChartsToShow(e.target.value);

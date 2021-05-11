@@ -15,6 +15,10 @@ const initialState = {
   projectsTrainedNotifications: [],
 
   projectsToShow: types.ALL,
+
+  loadingPrediction: false,
+  prediction: null,
+  predictionError: null,
 };
 
 export default function projectReducer(
@@ -40,6 +44,7 @@ export default function projectReducer(
             })),
           ],
         },
+        prediction: null,
       };
     }
 
@@ -100,6 +105,23 @@ export default function projectReducer(
         projectsToShow: payload.type,
       };
     }
+
+    case projectTypes.MAKE_PREDICTION_REQUEST:
+      return { ...state, loadingPrediction: true };
+
+    case projectTypes.MAKE_PREDICTION_SUCCESS:
+      return {
+        ...state,
+        loadingPrediction: false,
+        prediction: payload,
+      };
+
+    case projectTypes.MAKE_PREDICTION_FAILURE:
+      return {
+        ...state,
+        loadingPrediction: false,
+        predictionError: payload.error,
+      };
 
     default:
       return { ...state };

@@ -1,11 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
-import { fetchProjectRequest } from "../../redux/actions/ProjectActions";
+import {
+  fetchProjectRequest,
+  makePredictionRequest,
+} from "../../redux/actions/ProjectActions";
 import { useTranslation } from "react-i18next";
 import { Charts } from "./components/Charts";
-import { deletes } from "../../helpers/api";
+import { deletes, post } from "../../helpers/api";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -15,7 +18,12 @@ export function Project() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { t } = useTranslation();
-  const { project } = useSelector((state) => state.projects, shallowEqual);
+  const [tab, setTab] = useState("data");
+  const [values, setValues] = useState({});
+  const { project, prediction } = useSelector(
+    (state) => state.projects,
+    shallowEqual
+  );
 
   useEffect(() => {
     dispatch(fetchProjectRequest(id));
@@ -25,26 +33,68 @@ export function Project() {
     return <h1>Loading..</h1>;
   }
 
+  async function onPredict() {
+    dispatch(makePredictionRequest(values, id));
+  }
+
   const { project_configuration } = project;
   const { configuration_file } = project_configuration;
 
   return (
     <div>
       <Header name={project.project_name} projectId={project.id} />
-      <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <CardAccuracy
-          label={t("projects.Accuracy")}
-          value={project_configuration.accuracy}
-        />
-        <CardError
-          label={t("projects.Error")}
-          value={project_configuration.error}
-        />
-      </dl>
-      <Correlation
-        correlation={project_configuration.correlation}
-        configurationFile={configuration_file}
-      />
+      <div className="flex row">
+        <button
+          className={classNames(
+            "shadow p-2 mr-12 w-52 rounded",
+            `${tab === "data" && "ring-2 ring-indigo-300"}`
+          )}
+          onClick={() => setTab("data")}
+        >
+          Data
+        </button>
+        <button
+          className={classNames(
+            "shadow p-2 w-52 rounded relative",
+            `${tab === "predictions" && "ring-2 ring-indigo-300"}`
+          )}
+          onClick={() => setTab("predictions")}
+        >
+          Predictions
+          <span className="absolute top-7 font-bold text-indigo-600 right-0">
+            BETA
+          </span>
+        </button>
+      </div>
+      {tab === "data" ? (
+        <>
+          <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <CardAccuracy
+              label={t("projects.Accuracy")}
+              value={project_configuration.accuracy}
+            />
+            <CardError
+              label={t("projects.Error")}
+              value={project_configuration.error}
+            />
+          </dl>
+          <Correlation
+            correlation={project_configuration.correlation}
+            configurationFile={configuration_file}
+          />
+        </>
+      ) : (
+        <>
+          <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-1">
+            <Prediction onPredict={onPredict} prediction={prediction} />
+            <Properties
+              configurationFile={configuration_file}
+              values={values}
+              setValue={setValues}
+            />
+          </dl>
+        </>
+      )}
     </div>
   );
 }
@@ -165,4 +215,61 @@ function Correlation({ correlation, configurationFile }) {
   }
 
   return null;
+}
+
+function Properties({ configurationFile, values, setValue }) {
+  const label = configurationFile.label;
+  const columns = configurationFile.all_columns;
+  const filteredColumns = columns.filter((c) => c !== label);
+
+  return (
+    <div>
+      <div className="flex row flex-wrap col-span-1">
+        {filteredColumns.map((column) => {
+          return (
+            <Property
+              key={column}
+              column={column}
+              values={values}
+              setValue={setValue}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function Property({ column, values = {}, setValue }) {
+  return (
+    <div className="py-5 bg-white rounded-lg overflow-hidden">
+      <dt className="text-sm font-medium text-gray-500 truncate">{column}</dt>
+      <dd className="font-semibold text-gray-900">
+        <input
+          className="p-2 mr-36 border-2"
+          placeholder="0.2"
+          value={values[column]}
+          onChange={(e) => setValue({ ...values, [column]: e.target.value })}
+        />
+      </dd>
+    </div>
+  );
+}
+
+function Prediction({ onPredict, prediction }) {
+  return (
+    <div className="py-5 bg-white rounded-lg overflow-hidden flex row shadow-lg h-32 px-5">
+      <dt className="text-sm font-medium text-gray-500 truncate">
+        {prediction && !isNaN(prediction) && Math.round(prediction)}
+      </dt>
+      <dd className="mt-1 font-semibold text-gray-900 ml-auto mt-auto">
+        <button
+          className="bg-indigo-600 text-white p-4 w-36 h-12 rounded"
+          onClick={onPredict}
+        >
+          Predict
+        </button>
+      </dd>
+    </div>
+  );
 }
