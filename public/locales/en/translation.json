@@ -20,14 +20,16 @@
     "projects": "projects",
     "new-project": "new project",
     "account": "account",
-    "settings": "settings"
+    "settings": "settings",
+    "databases": "databases"
   },
   "nav": {
     "dashboard": "Dashboard",
     "projects": "Projects",
     "signout": "Sign out",
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "databases": "Databases"
   },
   "notifications": {
     "clearNotifications": "Clear notifications",
