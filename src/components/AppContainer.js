@@ -12,6 +12,7 @@ import { clearNotifications } from "../redux/actions/ProjectActions";
 const navigation = [
   { name: "Dashboard", path: "/app", locale: "nav.dashboard" },
   { name: "Projects", path: "/app/projects", locale: "nav.projects" },
+  { name: "Databases", path: "/app/databases", locale: "nav.databases" },
 ];
 
 const userNavigation = [

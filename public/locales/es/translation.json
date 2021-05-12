@@ -20,14 +20,16 @@
     "projects": "proyectos",
     "new-project": "nuevo proyecto",
     "account": "cuenta",
-    "settings": "ajustes"
+    "settings": "ajustes",
+    "databases": "bases de datos"
   },
   "nav": {
     "dashboard": "Inicio",
     "projects": "Proyectos",
     "signout": "Cerrar sesión",
     "profile": "Perfil",
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "databases": "Bases de datos"
   },
   "notifications": {
     "clearNotifications": "Limpiar notificaciones",
