@@ -10,9 +10,19 @@ import { logout } from "../redux/actions/AuthActions";
 import { clearNotifications } from "../redux/actions/ProjectActions";
 
 const navigation = [
-  { name: "Dashboard", path: "/app", locale: "nav.dashboard" },
-  { name: "Projects", path: "/app/projects", locale: "nav.projects" },
-  { name: "Databases", path: "/app/databases", locale: "nav.databases" },
+  { name: "Dashboard", path: "/app", locale: "nav.dashboard", pro: false },
+  {
+    name: "Projects",
+    path: "/app/projects",
+    locale: "nav.projects",
+    pro: false,
+  },
+  {
+    name: "Databases",
+    path: "/app/databases",
+    locale: "nav.databases",
+    pro: true,
+  },
 ];
 
 const userNavigation = [
@@ -141,7 +151,7 @@ export function AppContainer({ children }) {
                           item.path === window.location.pathname
                             ? "border-indigo-500 text-gray-900"
                             : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
-                          "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                          "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium relative"
                         )}
                         aria-current={
                           item.path === window.location.pathname
@@ -150,6 +160,11 @@ export function AppContainer({ children }) {
                         }
                       >
                         {t(item.locale)}
+                        {item.pro && (
+                          <span className="absolute right-0 bottom-0 text-indigo-500">
+                            PRO
+                          </span>
+                        )}
                       </Link>
                     ))}
                   </div>

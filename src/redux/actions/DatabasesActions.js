@@ -13,7 +13,7 @@ export const fetchDatabases = () => async (dispatch) => {
   try {
     dispatch({
       type: databasesTypes.FETCH_DATABASES_SUCCESS,
-      payload: { databases },
+      payload: { databases: databases.results },
     });
   } catch (e) {
     dispatch({
