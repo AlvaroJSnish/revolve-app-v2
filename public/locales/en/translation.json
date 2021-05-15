@@ -21,7 +21,8 @@
     "new-project": "new project",
     "account": "account",
     "settings": "settings",
-    "databases": "databases"
+    "databases": "databases",
+    "new-database": "new database connection"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -43,7 +44,7 @@
     "lastWeek": "Last week",
     "thisWeek": "This week",
     "evolution": "{{ label }} evolution",
-    "changesOn": "Changes on {{ label }} since last week",
+    "changesOn": "Changes on {{ label }} since last week"
   },
   "projects": {
     "CLASSIFICATION": "CLASSIFICATION",
@@ -100,5 +101,30 @@
     "delete": "Delete",
     "correlation": "Correlation",
     "watchingCharts": "Showing <1></1> charts"
+  },
+  "databases": {
+    "newDatabase": "New connection",
+    "create": {
+      "placeholder": {
+        "type": "Type",
+        "name": "Name",
+        "host": "Address",
+        "password": "Password",
+        "user": "User",
+        "port": "Port"
+      },
+      "connect": "Connect",
+      "saveConnection": "Do you want to save the connection? If not, all data will be lost. Don't worry, all the data will be encrypted.",
+      "save": "Save",
+      "dismiss": "Dimiss"
+    },
+    "connectedSuccessfully": "Connected successfully",
+    "connectedError": "Something went wrong, check the credentials",
+    "table": {
+      "header": {
+        "type": "Type",
+        "name": "Name"
+      }
+    }
   }
 }

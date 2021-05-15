@@ -119,6 +119,12 @@
       "dismiss": "Descartar"
     },
     "connectedSuccessfully": "Conectado correctamente",
-    "connectedError": "Comprueba las credenciales, algo ha fallado"
+    "connectedError": "Comprueba las credenciales, algo ha fallado",
+    "table": {
+      "header": {
+        "type": "Tipo",
+        "name": "Nombre"
+      }
+    }
   }
 }
