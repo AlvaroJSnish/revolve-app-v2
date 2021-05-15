@@ -100,3 +100,9 @@ const createDatabaseConnection = (values, history) => async (dispatch) => {
     });
   }
 };
+
+const trainModelFromDatabase = (headers, rows, history) => async (dispatch) => {
+  try {
+    dispatch({});
+  } catch (e) {}
+};

@@ -59,6 +59,23 @@ export default function databasesReducer(
       };
     }
 
+    case databasesTypes.FETCH_DATABASE_REQUEST: {
+      return {
+        ...state,
+        loadingDatabase: true,
+        database: null,
+        databaseError: null,
+      };
+    }
+
+    case databasesTypes.FETCH_DATABASE_SUCCESS: {
+      return { ...state, loadingDatabase: false, database: payload.database };
+    }
+
+    case databasesTypes.FETCH_DATABASE_FAILURE: {
+      return { ...state, loadingDatabase: false, error: payload.error };
+    }
+
     case databasesTypes.CHECK_DATABASE_CONNECTION_REQUEST: {
       return {
         ...state,
