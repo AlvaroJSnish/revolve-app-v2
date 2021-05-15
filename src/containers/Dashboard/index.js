@@ -12,6 +12,7 @@ import { Project } from "../Projects/Project";
 import { onConnectWebsocket } from "../../helpers/websocket";
 import { NewProject } from "../Projects/NewProject";
 import { Databases } from "../Databases";
+import { NewDatabase } from "../Databases/NewDatabase";
 
 export function Dashboard() {
   const { path } = useRouteMatch();
@@ -29,6 +30,11 @@ export function Dashboard() {
             exact
             path={`${path}/databases`}
             component={Databases}
+          />
+          <PrivateRoute
+            exact
+            path={`${path}/databases/new-database`}
+            component={NewDatabase}
           />
           <PrivateRoute exact path={`${path}/dashboard`} component={Home} />
           <PrivateRoute exact path={`${path}/projects`} component={Projects} />

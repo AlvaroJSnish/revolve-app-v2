@@ -21,7 +21,8 @@
     "new-project": "nuevo proyecto",
     "account": "cuenta",
     "settings": "ajustes",
-    "databases": "bases de datos"
+    "databases": "bases de datos",
+    "new-database": "nueva conexión a bdd"
   },
   "nav": {
     "dashboard": "Inicio",
@@ -100,5 +101,24 @@
     "delete": "Borrar",
     "correlation": "Correlación",
     "watchingCharts": "Mostrar gráficas de tipo <1></1>"
+  },
+  "databases": {
+    "newDatabase": "Nueva conexión",
+    "create": {
+      "placeholder": {
+        "type": "Tipo",
+        "name": "Nombre",
+        "host": "Dirección",
+        "password": "Contraseña",
+        "user": "Usuario",
+        "port": "Puerto"
+      },
+      "connect": "Conectar",
+      "saveConnection": "¿Desea guardar esta conexión? Si no, se perderá. No te preocupes, todos los datos estarán cifrados.",
+      "save": "Guardar",
+      "dismiss": "Descartar"
+    },
+    "connectedSuccessfully": "Conectado correctamente",
+    "connectedError": "Comprueba las credenciales, algo ha fallado"
   }
 }

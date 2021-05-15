@@ -9,6 +9,11 @@ const initialState = {
   databaseError: null,
   loadingCreateDatabase: false,
   createDatabaseError: null,
+
+  // checking connections
+  connectingToDatabase: false,
+  databaseConnectionStatus: null,
+  databaseConnectionMessage: null,
 };
 
 export default function databasesReducer(
@@ -51,6 +56,42 @@ export default function databasesReducer(
         ...state,
         loadingCreateDatabase: false,
         createDatabaseError: payload.error,
+      };
+    }
+
+    case databasesTypes.CHECK_DATABASE_CONNECTION_REQUEST: {
+      return {
+        ...state,
+        connectingToDatabase: true,
+        databaseConnectionStatus: null,
+        databaseConnectionMessage: null,
+      };
+    }
+
+    case databasesTypes.CHECK_DATABASE_CONNECTION_SUCCESS: {
+      return {
+        ...state,
+        connectingToDatabase: false,
+        databaseConnectionStatus: payload.status,
+        databaseConnectionMessage: payload.message,
+      };
+    }
+
+    case databasesTypes.CHECK_DATABASE_CONNECTION_FAILURE: {
+      return {
+        ...state,
+        connectingToDatabase: false,
+        databaseConnectionStatus: payload.status,
+        databaseConnectionMessage: payload.message,
+      };
+    }
+
+    case databasesTypes.DISMISS_CONNECTION: {
+      return {
+        ...state,
+        connectingToDatabase: false,
+        databaseConnectionStatus: null,
+        databaseConnectionMessage: null,
       };
     }
 
