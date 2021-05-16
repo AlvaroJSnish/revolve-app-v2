@@ -126,5 +126,13 @@
         "name": "Nombre"
       }
     }
+  },
+  "account": {
+    "upgrade": {
+      "title": "¡Para continuar debes actualizar tu cuenta!",
+      "dismiss": "Cancelar",
+      "continue": "Continuar",
+      "message": "Has agotado tus 14 días de prueba gratuita. Para continuar a la app, debes actualizar tu cuenta a una suscripción superior. Si crees que esto es un error, contacta con atención al cliente."
+    }
   }
 }

@@ -9,6 +9,7 @@ import {
 import { SignIn } from "../containers/Auth";
 import { Dashboard } from "../containers/Dashboard";
 import { Signup } from "../containers/Auth/SignUp";
+import { UpgradeAccountModal } from "../containers/Modals";
 
 export function Navigator() {
   return (
@@ -20,6 +21,8 @@ export function Navigator() {
           <PrivateRoute path="/app" component={Dashboard} />
         </Switch>
       </Router>
+
+      <UpgradeAccountModal />
     </Suspense>
   );
 }

@@ -18,16 +18,22 @@ const login = (email, password, history) => async (dispatch) => {
     saveToStorage("access_token", res.access_token);
     saveToStorage("user", res.user);
 
-    dispatch({
-      type: authTypes.LOGIN_SUCCESS,
-      payload: { user: res.user, token: res.access_token },
-    });
-
-    return history.push("/app");
+    if (res.user.disabled) {
+      dispatch(showUpgradeModal());
+    } else {
+      dispatch({
+        type: authTypes.LOGIN_SUCCESS,
+        payload: { user: res.user, token: res.access_token },
+      });
+      return history.push("/app");
+    }
   } catch (e) {
+    const error =
+      (e && e.response && e.response.data && e.response.data.reasons) ||
+      "Unknown error";
     return dispatch({
       type: authTypes.LOGIN_FAILURE,
-      payload: { error: e },
+      payload: { error },
     });
   }
 };
@@ -76,4 +82,16 @@ export const logout = (history) => async (dispatch) => {
       payload: { error: e && e.response && e.response.data },
     });
   }
+};
+
+export const showUpgradeModal = () => (dispatch) => {
+  dispatch({
+    type: authTypes.SHOW_UPGRADE_MODAL,
+  });
+};
+
+export const dismissUpgradeModal = () => (dispatch) => {
+  dispatch({
+    type: authTypes.DISMISS_UPGRADE_MODAL,
+  });
 };

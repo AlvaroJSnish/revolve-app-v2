@@ -1,6 +1,6 @@
 import { authTypes } from "../types/AuthTypes";
 
-const initialState = {
+export const authState = {
   user: null,
   access_token: null,
   loadingSignIn: false,
@@ -8,12 +8,14 @@ const initialState = {
   loadingSignUp: false,
   signUpError: null,
   logoutError: null,
+
+  showUpgradeModal: false,
 };
 
-export default function AuthReducer(state = initialState, { type, payload }) {
+export default function AuthReducer(state = authState, { type, payload }) {
   switch (type) {
     case authTypes.LOGIN_REQUEST: {
-      return { ...state, loadingSignIn: true };
+      return { ...state, loadingSignIn: true, signInError: null };
     }
 
     case authTypes.LOGIN_SUCCESS: {
@@ -54,6 +56,14 @@ export default function AuthReducer(state = initialState, { type, payload }) {
 
     case authTypes.LOGOUT_FAILURE: {
       return { ...state, logoutError: payload.error };
+    }
+
+    case authTypes.SHOW_UPGRADE_MODAL: {
+      return { ...state, loadingSignIn: false, showUpgradeModal: true };
+    }
+
+    case authTypes.DISMISS_UPGRADE_MODAL: {
+      return { ...state, loadingSignIn: false, showUpgradeModal: false };
     }
 
     default: {

@@ -5,12 +5,13 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { LoadingCircle } from "../../components";
 import { loginRequest } from "../../redux/actions/AuthActions";
+import { UpgradeAccountModal } from "../Modals";
 
 export function SignIn({ history }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const loadingSignIn = useSelector(
-    (state) => state.auth.loadingSignIn,
+  const { loadingSignIn, signInError, showUpgradeModal } = useSelector(
+    (state) => state.auth,
     shallowEqual
   );
 
@@ -34,6 +35,8 @@ export function SignIn({ history }) {
     e.preventDefault();
     dispatch(loginRequest(email, password, history));
   }
+
+  console.log(showUpgradeModal);
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -117,7 +120,10 @@ export function SignIn({ history }) {
                       required
                       onChange={handleEmail}
                       value={email}
-                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className={`
+                        appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
+                        ${signInError && "border-red-500"}
+                      `}
                     />
                   </div>
                 </div>
@@ -138,10 +144,14 @@ export function SignIn({ history }) {
                       required
                       onChange={handlePassword}
                       value={password}
-                      className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className={`
+                        appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
+                        ${signInError && "border-red-500"}
+                      `}
                     />
                   </div>
                 </div>
+                <span className="mt-12 text-red-500">{signInError}</span>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">

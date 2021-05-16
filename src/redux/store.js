@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { applyMiddleware, createStore } from "redux";
 
 import reducers from "./reducers";
+import { authState } from "./reducers/AuthReducer";
 
 export let store;
 
@@ -34,7 +35,6 @@ export const initializeStore = (preloadedState) => {
 };
 
 export function useStore() {
-  const authState = {};
   const access_token = localStorage.getItem("access_token");
   const user = localStorage.getItem("user");
   if (access_token && user) {
