@@ -38,7 +38,7 @@ export function ProjectFromDBModal({
         project_type: "REGRESSION",
       })
     ).data;
-    await post(`projects/${project.id}/config/${config.id}/database`, {
+    await post(`projects/${project.id}/config/${config.id}/config_file`, {
       project_configuration: config.id,
       all_columns: allColumns,
       saved_columns: savedColumns,
@@ -47,6 +47,8 @@ export function ProjectFromDBModal({
       project_id: project.id,
       database_id: database.id,
       table_name: tableName,
+      from_database: true,
+      temporary_uuid: null,
     });
     setLoading(false);
     history.push("/app/projects");
