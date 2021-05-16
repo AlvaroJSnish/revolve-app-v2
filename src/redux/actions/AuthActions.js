@@ -57,7 +57,7 @@ const signup = (email, password, history) => async (dispatch) => {
   } catch (e) {
     return dispatch({
       type: authTypes.SIGNUP_FAILURE,
-      payload: { error: e.response.data },
+      payload: { error: e && e.response && e.response.data },
     });
   }
 };
@@ -73,7 +73,7 @@ export const logout = (history) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: authTypes.LOGOUT_FAILURE,
-      payload: { error: e.response.data },
+      payload: { error: e && e.response && e.response.data },
     });
   }
 };

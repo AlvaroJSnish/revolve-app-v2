@@ -7,6 +7,7 @@ export function ProjectFromDBModal({
   database,
   headers,
   tableName,
+  history,
 }) {
   const [allColumns, setAllColumns] = useState(headers);
   const [deletedColumns, setDeletedColumns] = useState([]);
@@ -47,6 +48,8 @@ export function ProjectFromDBModal({
       database_id: database.id,
       table_name: tableName,
     });
+    setLoading(false);
+    history.push("/app/projects");
   }
 
   return (

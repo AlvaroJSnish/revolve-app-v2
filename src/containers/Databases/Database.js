@@ -7,7 +7,7 @@ import { get } from "../../helpers/api";
 import { ProjectFromDBModal } from "../Modals";
 import { fetchDatabaseRequest } from "../../redux/actions/DatabasesActions";
 
-export function Database({ navigation }) {
+export function Database({ history }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { database, loadingDatabase } = useSelector(
@@ -135,6 +135,7 @@ export function Database({ navigation }) {
           setShowModal={setShowModal}
           database={database}
           tableName={selectedTable}
+          history={history}
         />
       ) : null}
     </div>
