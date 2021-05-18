@@ -14,6 +14,7 @@ import { NewProject } from "../Projects/NewProject";
 import { Databases } from "../Databases";
 import { NewDatabase } from "../Databases/NewDatabase";
 import { Database } from "../Databases/Database";
+import { UpgradeAccountModal } from "../Modals";
 
 export function Dashboard() {
   const { path } = useRouteMatch();

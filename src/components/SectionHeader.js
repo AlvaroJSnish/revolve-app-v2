@@ -1,13 +1,21 @@
-import { Link, useLocation, useRouteMatch } from "react-router-dom";
+import { Link, useHistory, useLocation, useRouteMatch } from "react-router-dom";
 
 import { HomeIcon } from "@heroicons/react/solid";
 import { useTranslation } from "react-i18next";
+import { get } from "../helpers/api";
+import { useDispatch } from "react-redux";
+import {
+  showMoreDatabasesModal,
+  showMoreProjectsModal,
+} from "../redux/actions/AuthActions";
 
 const uuidRegex = new RegExp(
   /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
 );
 
 export function SectionHeader() {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const { pathname } = useLocation();
@@ -78,24 +86,50 @@ export function SectionHeader() {
   function renderButtons() {
     if (pathname === "/app/projects") {
       return (
-        <Link
-          to={`${path}/projects/new-project`}
+        <button
+          // to={`${path}/projects/new-project`}
+          onClick={onNewProject}
           className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           {t("projects.newProject")}
-        </Link>
+        </button>
       );
     }
 
     if (pathname === "/app/databases") {
       return (
-        <Link
-          to={`${path}/databases/new-database`}
+        <button
+          // to={`${path}/databases/new-database`}
+          onClick={onNewDatabase}
           className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           {t("databases.newDatabase")}
-        </Link>
+        </button>
       );
+    }
+  }
+
+  async function onNewProject() {
+    const { available, slots, account_type } = await (
+      await get("users/available-projects")
+    ).data;
+
+    if (available) {
+      history.push(`${path}/projects/new-project`);
+    } else {
+      dispatch(showMoreProjectsModal({ account_type, available, slots }));
+    }
+  }
+
+  async function onNewDatabase() {
+    const { available, slots, account_type } = await (
+      await get("users/available-databases")
+    ).data;
+
+    if (available) {
+      history.push(`${path}/projects/new-database`);
+    } else {
+      dispatch(showMoreDatabasesModal({ account_type, available, slots }));
     }
   }
 

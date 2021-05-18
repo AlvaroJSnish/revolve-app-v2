@@ -95,3 +95,34 @@ export const dismissUpgradeModal = () => (dispatch) => {
     type: authTypes.DISMISS_UPGRADE_MODAL,
   });
 };
+
+export const showMoreProjectsModal = (data) => (dispatch) => {
+  dispatch({
+    type: authTypes.SHOW_MORE_PROJECTS_MODAL,
+    payload: { data },
+  });
+};
+
+export const dismissMoreProjectsModal = (history) => (dispatch) => {
+  dispatch({
+    type: authTypes.DISMISS_MORE_PROJECTS_MODAL,
+  });
+  history.push("/app/projects");
+};
+
+export const showMoreDatabasesModal = (data) => (dispatch) => {
+  dispatch({
+    type: authTypes.SHOW_MORE_DATABASES_MODAL,
+    payload: { data },
+  });
+};
+
+export const dismissMoreDatabasesModal =
+  (history, account_type) => (dispatch) => {
+    dispatch({
+      type: authTypes.DISMISS_MORE_DATABASES_MODAL,
+    });
+    if (account_type === "TRIAL_ACCOUNT") {
+      history.push("/app");
+    }
+  };

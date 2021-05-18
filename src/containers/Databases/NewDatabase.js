@@ -1,5 +1,5 @@
 import Lottie from "react-lottie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
@@ -14,6 +14,8 @@ import {
   dismissConnection,
 } from "../../redux/actions/DatabasesActions";
 import { LoadingCircle } from "../../components";
+import { get } from "../../helpers/api";
+import { showMoreDatabasesModal } from "../../redux/actions/AuthActions";
 
 export function NewDatabase({ history }) {
   const { t } = useTranslation();
@@ -25,6 +27,18 @@ export function NewDatabase({ history }) {
     databaseConnectionMessage,
     loadingCreateDatabase,
   } = useSelector((state) => state.databases, shallowEqual);
+
+  useEffect(() => {
+    (async function () {
+      const { available, slots, account_type } = await (
+        await get("users/available-projects")
+      ).data;
+
+      if (!available) {
+        dispatch(showMoreDatabasesModal({ account_type, available, slots }));
+      }
+    })();
+  }, []);
 
   async function handleConnect() {
     dispatch(checkDBConnectionRequest(db));

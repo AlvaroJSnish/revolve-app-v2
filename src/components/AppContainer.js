@@ -1,13 +1,14 @@
 import { Fragment } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { useTranslation, Trans } from "react-i18next";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { SectionHeader } from "./SectionHeader";
-import { logout } from "../redux/actions/AuthActions";
+import { logout, showMoreDatabasesModal } from "../redux/actions/AuthActions";
 import { clearNotifications } from "../redux/actions/ProjectActions";
+import { get } from "../helpers/api";
 
 const navigation = [
   { name: "Dashboard", path: "/app", locale: "nav.dashboard", pro: false },
@@ -39,6 +40,7 @@ export function AppContainer({ children }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { path } = useRouteMatch();
   const { projectsTrainedNotifications } = useSelector(
     (state) => state.projects,
     shallowEqual
@@ -122,6 +124,18 @@ export function AppContainer({ children }) {
     dispatch(logout(history));
   }
 
+  async function onNavigateToDatabase() {
+    const { available, slots, account_type } = await (
+      await get("users/available-databases")
+    ).data;
+
+    if (available) {
+      history.push(`${path}/databases`);
+    } else {
+      dispatch(showMoreDatabasesModal({ account_type, available, slots }));
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Disclosure as="nav" className="bg-white">
@@ -143,30 +157,59 @@ export function AppContainer({ children }) {
                     />
                   </div>
                   <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.path}
-                        className={classNames(
-                          item.path === window.location.pathname
-                            ? "border-indigo-500 text-gray-900"
-                            : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
-                          "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium relative"
-                        )}
-                        aria-current={
-                          item.path === window.location.pathname
-                            ? "page"
-                            : undefined
-                        }
-                      >
-                        {t(item.locale)}
-                        {item.pro && (
-                          <span className="absolute right-0 bottom-0 text-indigo-500">
-                            PRO
-                          </span>
-                        )}
-                      </Link>
-                    ))}
+                    {navigation.map((item) => {
+                      if (item.name === "Databases") {
+                        return (
+                          <button
+                            key={item.name}
+                            onClick={onNavigateToDatabase}
+                            className={classNames(
+                              item.path === window.location.pathname
+                                ? "border-indigo-500 text-gray-900"
+                                : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
+                              "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium relative"
+                            )}
+                            aria-current={
+                              item.path === window.location.pathname
+                                ? "page"
+                                : undefined
+                            }
+                          >
+                            {t(item.locale)}
+                            {item.pro && (
+                              <span className="absolute right-0 bottom-0 text-indigo-500">
+                                PRO
+                              </span>
+                            )}
+                          </button>
+                        );
+                      }
+
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className={classNames(
+                            item.path === window.location.pathname
+                              ? "border-indigo-500 text-gray-900"
+                              : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
+                            "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium relative"
+                          )}
+                          aria-current={
+                            item.path === window.location.pathname
+                              ? "page"
+                              : undefined
+                          }
+                        >
+                          {t(item.locale)}
+                          {item.pro && (
+                            <span className="absolute right-0 bottom-0 text-indigo-500">
+                              PRO
+                            </span>
+                          )}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:items-center">

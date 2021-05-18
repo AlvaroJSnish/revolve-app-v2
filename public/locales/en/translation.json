@@ -126,5 +126,17 @@
         "name": "Name"
       }
     }
+  },
+  "account": {
+    "upgrade": {
+      "title": "To continue you need to upgrade your account!",
+      "dismiss": "Cancel",
+      "continue": "Continue",
+      "message": "You have exhausted your 14-day free trial. To continue to the app, you must upgrade your account to a higher subscription. If you think this is a mistake, please contact customer support.",
+      "TRIAL_ACCOUNT": "trial account",
+      "moreProjectsMessage": "Your {{ translatedAccountType }} has reached its maximum project limit, to continue creating more try to make room or subscribe to a higher plan.",
+      "moreDatabasesMessage": "Your {{ translatedAccountType }} has reached its maximum database limit, to continue creating more try to make room or subscribe to a higher plan.",
+      "databasesTrialAccount": "The trial account does not have access to databases, if you wish, you can subscribe to a higher plan."
+    }
   }
 }

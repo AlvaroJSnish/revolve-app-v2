@@ -4,18 +4,30 @@ import { useTranslation } from "react-i18next";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { fetchDatabasesRequest } from "../../redux/actions/DatabasesActions";
+import { get } from "../../helpers/api";
+import { showMoreDatabasesModal } from "../../redux/actions/AuthActions";
 
-export function Databases() {
+export function Databases({ history }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const { databases } = useSelector((state) => state.databases, shallowEqual);
 
   useEffect(() => {
-    dispatch(fetchDatabasesRequest());
+    (async function () {
+      const { available, slots, account_type } = await (
+        await get("users/available-projects")
+      ).data;
+
+      if (!available) {
+        dispatch(showMoreDatabasesModal({ account_type, available, slots }));
+      }
+    })();
   }, []);
 
-  console.log(databases);
+  useEffect(() => {
+    dispatch(fetchDatabasesRequest());
+  }, []);
 
   return (
     <div className="flex flex-col">

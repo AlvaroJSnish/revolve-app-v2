@@ -10,6 +10,9 @@ export const authState = {
   logoutError: null,
 
   showUpgradeModal: false,
+  showMoreProjectsModal: false,
+  moreProjectsData: {},
+  moreDatabasesData: {},
 };
 
 export default function AuthReducer(state = authState, { type, payload }) {
@@ -64,6 +67,36 @@ export default function AuthReducer(state = authState, { type, payload }) {
 
     case authTypes.DISMISS_UPGRADE_MODAL: {
       return { ...state, loadingSignIn: false, showUpgradeModal: false };
+    }
+
+    case authTypes.SHOW_MORE_PROJECTS_MODAL: {
+      return {
+        ...state,
+        showMoreProjectsModal: true,
+        moreProjectsData: { ...payload.data },
+      };
+    }
+
+    case authTypes.DISMISS_MORE_PROJECTS_MODAL: {
+      return {
+        ...state,
+        showMoreProjectsModal: false,
+      };
+    }
+
+    case authTypes.SHOW_MORE_DATABASES_MODAL: {
+      return {
+        ...state,
+        showMoreDatabasesModal: true,
+        moreDatabasesData: { ...payload.data },
+      };
+    }
+
+    case authTypes.DISMISS_MORE_DATABASES_MODAL: {
+      return {
+        ...state,
+        showMoreDatabasesModal: false,
+      };
     }
 
     default: {

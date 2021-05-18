@@ -132,7 +132,11 @@
       "title": "¡Para continuar debes actualizar tu cuenta!",
       "dismiss": "Cancelar",
       "continue": "Continuar",
-      "message": "Has agotado tus 14 días de prueba gratuita. Para continuar a la app, debes actualizar tu cuenta a una suscripción superior. Si crees que esto es un error, contacta con atención al cliente."
+      "message": "Has agotado tus 14 días de prueba gratuita. Para continuar a la app, debes actualizar tu cuenta a una suscripción superior. Si crees que esto es un error, contacta con atención al cliente.",
+      "TRIAL_ACCOUNT": "cuenta de prueba",
+      "moreProjectsMessage": "Tu {{ translatedAccountType }} ha llegado a su límite máximo de proyectos, para continuar creando más trata de hacer hueco o suscríbete a un plan superior.",
+      "moreDatabasesMessage": "Tu {{ translatedAccountType }} ha llegado a su límite máximo de bases de datos, para continuar creando más trata de hacer hueco o suscríbete a un plan superior.",
+      "databasesTrialAccount": "La cuenta de prueba no tiene acceso a bases de datos, si lo deseas, puedes suscribirte a un plan superior."
     }
   }
 }

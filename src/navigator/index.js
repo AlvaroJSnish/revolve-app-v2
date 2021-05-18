@@ -6,10 +6,13 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import { SignIn } from "../containers/Auth";
+import { SignIn, Signup } from "../containers/Auth";
 import { Dashboard } from "../containers/Dashboard";
-import { Signup } from "../containers/Auth/SignUp";
-import { UpgradeAccountModal } from "../containers/Modals";
+import {
+  MoreDatabasesModal,
+  MoreProjectsModal,
+  UpgradeAccountModal,
+} from "../containers/Modals";
 
 export function Navigator() {
   return (
@@ -20,9 +23,11 @@ export function Navigator() {
           <Route exact path="/signup" component={Signup} />
           <PrivateRoute path="/app" component={Dashboard} />
         </Switch>
-      </Router>
 
-      <UpgradeAccountModal />
+        <UpgradeAccountModal />
+        <MoreProjectsModal />
+        <MoreDatabasesModal />
+      </Router>
     </Suspense>
   );
 }
