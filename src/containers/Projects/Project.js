@@ -8,7 +8,8 @@ import {
 } from "../../redux/actions/ProjectActions";
 import { useTranslation } from "react-i18next";
 import { Charts } from "./components/Charts";
-import { deletes, post } from "../../helpers/api";
+import { deletes } from "../../helpers/api";
+import { Retrain } from "./components/Retrain";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -43,7 +44,7 @@ export function Project() {
   return (
     <div>
       <Header name={project.project_name} projectId={project.id} />
-      <div className="flex row">
+      <div className="flex flex-row">
         <button
           className={classNames(
             "shadow p-2 mr-12 w-52 rounded",
@@ -55,7 +56,7 @@ export function Project() {
         </button>
         <button
           className={classNames(
-            "shadow p-2 w-52 rounded relative",
+            "shadow p-2 mr-12 w-52 rounded relative",
             `${tab === "predictions" && "ring-2 ring-indigo-300"}`
           )}
           onClick={() => setTab("predictions")}
@@ -65,26 +66,38 @@ export function Project() {
             BETA
           </span>
         </button>
+        <button
+          className={classNames(
+            "shadow p-2 w-52 rounded relative",
+            `${tab === "retraining" && "ring-2 ring-indigo-300"}`
+          )}
+          onClick={() => setTab("retraining")}
+        >
+          Retraining
+          <span className="absolute top-7 font-bold text-indigo-600 right-0">
+            BETA
+          </span>
+        </button>
       </div>
-      {tab === "data" ? (
-        <>
-          <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <CardAccuracy
-              label={t("projects.Accuracy")}
-              value={project_configuration.accuracy}
+      <div>
+        {tab === "data" ? (
+          <>
+            <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <CardAccuracy
+                label={t("projects.Accuracy")}
+                value={project_configuration.accuracy}
+              />
+              <CardError
+                label={t("projects.Error")}
+                value={project_configuration.error}
+              />
+            </dl>
+            <Correlation
+              correlation={project_configuration.correlation}
+              configurationFile={configuration_file}
             />
-            <CardError
-              label={t("projects.Error")}
-              value={project_configuration.error}
-            />
-          </dl>
-          <Correlation
-            correlation={project_configuration.correlation}
-            configurationFile={configuration_file}
-          />
-        </>
-      ) : (
-        <>
+          </>
+        ) : tab === "predictions" ? (
           <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-1">
             <Prediction onPredict={onPredict} prediction={prediction} />
             <Properties
@@ -93,8 +106,12 @@ export function Project() {
               setValue={setValues}
             />
           </dl>
-        </>
-      )}
+        ) : (
+          <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-1">
+            <Retrain project={project_configuration} />
+          </dl>
+        )}
+      </div>
     </div>
   );
 }
