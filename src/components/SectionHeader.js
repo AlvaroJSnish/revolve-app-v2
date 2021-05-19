@@ -127,7 +127,7 @@ export function SectionHeader() {
     ).data;
 
     if (available) {
-      history.push(`${path}/projects/new-database`);
+      history.push(`${path}/databases/new-database`);
     } else {
       dispatch(showMoreDatabasesModal({ account_type, available, slots }));
     }
