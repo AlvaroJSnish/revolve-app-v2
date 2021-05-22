@@ -29,7 +29,7 @@ function FromDatabase({
   days,
   setDays,
   trainFromDatabase,
-  project_retrain,
+  project_retrain = {},
 }) {
   const { t } = useTranslation();
 
@@ -41,12 +41,12 @@ function FromDatabase({
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
           <select
-            value={project_retrain.scheduled_every || days}
-            disabled={project_retrain.scheduled}
+            value={(project_retrain && project_retrain.scheduled_every) || days}
+            disabled={project_retrain && project_retrain.scheduled}
             onChange={(e) => setDays(e.target.value)}
             className={`
               rounded shadow border-0 md:w-64 sm:w-32 h-12 ${
-                project_retrain.scheduled && "opacity-50"
+                project_retrain && project_retrain.scheduled && "opacity-50"
               }
             `}
           >
@@ -57,10 +57,10 @@ function FromDatabase({
           </select>
           <button
             onClick={trainFromDatabase}
-            disabled={project_retrain.scheduled}
+            disabled={project_retrain && project_retrain.scheduled}
             className={`
               primary bg-indigo-600 text-white rounded shadow border-0 md:w-64 sm:w-32 h-12 ${
-                project_retrain.scheduled && "opacity-50"
+                project_retrain && project_retrain.scheduled && "opacity-50"
               }
             `}
           >
@@ -74,7 +74,7 @@ function FromDatabase({
   return null;
 }
 
-function FromCSV({ project_retrain }) {
+function FromCSV({ project_retrain = {} }) {
   const { t } = useTranslation();
   return (
     <div className="shadow rounded p-4 grid grid-cols-1 gap-12 md:grid-cols-2">
@@ -83,10 +83,10 @@ function FromCSV({ project_retrain }) {
       </div>
       <div className="mt-auto">
         <button
-          disabled={project_retrain.scheduled}
+          disabled={project_retrain && project_retrain.scheduled}
           className={`
               primary bg-indigo-600 text-white rounded shadow border-0 md:w-64 sm:w-32 h-12 ${
-                project_retrain.scheduled && "opacity-50"
+                project_retrain && project_retrain.scheduled && "opacity-50"
               }`}
         >
           {t("retrain.uploadCSV")}
