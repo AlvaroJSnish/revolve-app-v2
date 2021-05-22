@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -18,6 +18,7 @@ export function Database({ history }) {
 
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState(null);
+  const [selectedFullTable, setSelectedFullTable] = useState(null);
   const [headers, setHeaders] = useState(null);
   const [rows, setRows] = useState(null);
 
@@ -31,7 +32,7 @@ export function Database({ history }) {
     if (database && database.id) {
       (async function () {
         const data = await (await get(`databases/${database.id}/tables`)).data;
-        setTables(data.tables.flat());
+        setTables(data.tables);
       })();
     }
   }, [database]);
@@ -56,6 +57,13 @@ export function Database({ history }) {
     setShowModal(true);
   }
 
+  function handleChangeTable(e) {
+    const { value } = e.target;
+    const table = JSON.parse(value);
+    setSelectedTable(table.table);
+    setSelectedFullTable(table);
+  }
+
   return (
     <div className="mt-4">
       <div className="flex flex-wrap h-24 content-center mb-12">
@@ -65,12 +73,12 @@ export function Database({ history }) {
         <select
           className="p-4 border-none w-48"
           placeholder="Select a table to inspect"
-          onChange={(e) => setSelectedTable(e.target.value)}
+          onChange={handleChangeTable}
         >
           <option value={null}>{null}</option>
           {tables.map((table, i) => (
-            <option key={i} value={table}>
-              {table}
+            <option key={i} value={JSON.stringify(table)}>
+              {table.table}
             </option>
           ))}
         </select>
@@ -78,13 +86,26 @@ export function Database({ history }) {
       {headers && headers.length && rows ? (
         <>
           <div className="mb-8">
-            <h3>
-              If everything looks good, you can{" "}
-              <button onClick={handleTrainModel} className="text-indigo-500">
-                train a model
-              </button>{" "}
-              from this data
-            </h3>
+            {selectedFullTable && selectedFullTable.has_project ? (
+              <h3>
+                You already{" "}
+                <Link
+                  className="text-indigo-500"
+                  to={`/app/projects/${selectedFullTable.project.id}`}
+                >
+                  created a project
+                </Link>{" "}
+                with this data!
+              </h3>
+            ) : (
+              <h3>
+                If everything looks good, you can{" "}
+                <button onClick={handleTrainModel} className="text-indigo-500">
+                  train a model
+                </button>{" "}
+                from this data
+              </h3>
+            )}
           </div>
           <div className="shadow border-b border-gray-200 sm:rounded-lg">
             <table
