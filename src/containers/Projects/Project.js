@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { useHistory, useParams } from "react-router-dom";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 
 import {
   fetchProjectRequest,
   makePredictionRequest,
 } from "../../redux/actions/ProjectActions";
-import { useTranslation } from "react-i18next";
 import { Charts } from "./components/Charts";
 import { deletes } from "../../helpers/api";
 import { Retrain } from "./components/Retrain";
@@ -31,14 +32,14 @@ export function Project() {
   }, [id]);
 
   if (!project) {
-    return <h1>Loading..</h1>;
+    return <h1>{t("common.loading")}</h1>;
   }
 
   async function onPredict() {
     dispatch(makePredictionRequest(values, id));
   }
 
-  const { project_configuration } = project;
+  const { project_configuration, project_retrain } = project;
   const { configuration_file } = project_configuration;
 
   return (
@@ -52,7 +53,7 @@ export function Project() {
           )}
           onClick={() => setTab("data")}
         >
-          Data
+          {t("project.tabs.data")}
         </button>
         <button
           className={classNames(
@@ -61,7 +62,7 @@ export function Project() {
           )}
           onClick={() => setTab("predictions")}
         >
-          Predictions
+          {t("project.tabs.predictions")}
           <span className="absolute top-7 font-bold text-indigo-600 right-0">
             BETA
           </span>
@@ -73,10 +74,16 @@ export function Project() {
           )}
           onClick={() => setTab("retraining")}
         >
-          Retraining
+          {t("project.tabs.retraining")}
           <span className="absolute top-7 font-bold text-indigo-600 right-0">
             BETA
           </span>
+          {project_retrain && project_retrain.scheduled && (
+            <CheckCircleIcon
+              className="absolute w-6 -right-3 bottom-8 text-green-500 rounded"
+              solid
+            />
+          )}
         </button>
       </div>
       <div>
@@ -108,7 +115,10 @@ export function Project() {
           </dl>
         ) : (
           <dl className="mt-5 mb-5 grid grid-cols-1 gap-5 sm:grid-cols-1">
-            <Retrain project={project_configuration} />
+            <Retrain
+              project={project_configuration}
+              project_retrain={project_retrain}
+            />
           </dl>
         )}
       </div>
@@ -274,6 +284,7 @@ function Property({ column, values = {}, setValue }) {
 }
 
 function Prediction({ onPredict, prediction }) {
+  const { t } = useTranslation();
   return (
     <div className="py-5 bg-white rounded-lg overflow-hidden flex row shadow-lg h-32 px-5">
       <dt className="text-sm font-medium text-gray-500 truncate">
@@ -284,7 +295,7 @@ function Prediction({ onPredict, prediction }) {
           className="bg-indigo-600 text-white p-4 w-36 h-12 rounded"
           onClick={onPredict}
         >
-          Predict
+          {t("project.predict")}
         </button>
       </dd>
     </div>

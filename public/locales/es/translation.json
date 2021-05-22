@@ -1,4 +1,7 @@
 {
+  "common": {
+    "loading": "Cargando..."
+  },
   "auth": {
     "emailAddress": "Email",
     "password": "Contraseña",
@@ -100,7 +103,21 @@
   "project": {
     "delete": "Borrar",
     "correlation": "Correlación",
-    "watchingCharts": "Mostrar gráficas de tipo <1></1>"
+    "watchingCharts": "Mostrar gráficas de tipo <1></1>",
+    "tabs": {
+      "data": "Datos",
+      "predictions": "Predicciones",
+      "retraining": "Reentrenar"
+    },
+    "predict": "Predecir",
+    "correlationWith": "correlación con"
+  },
+  "retrain": {
+    "fromDatabaseInfo": "Como has entrenado el proyecto a partir de una base de datos, el reentrenamiento es mucho más fácil: puedes configurar cada cuánto tiempo quieres entrenarlo, nosotros nos encargamos de buscar la información nueva en tu base de datos y de todo el proceso. Tú simplemente elige un período.",
+    "fromCSVInfo": "Puedes subir un CSV con datos nuevos (recuerda que los antiguos ya los conoce), siempre y cuando mantenga la misma estructura de columnas que el anterior, y a partir de esos datos nuevos reentrenaremos el modelo.",
+    "days": "días",
+    "configure": "Configurar",
+    "uploadCSV": "Subir CSV"
   },
   "databases": {
     "newDatabase": "Nueva conexión",
@@ -126,6 +143,11 @@
         "name": "Nombre"
       }
     }
+  },
+  "database": {
+    "takeAQuickLook": "Echa un vistazo rápido a las tablas: ",
+    "createdAProject": "creado un proyecto",
+    "alreadyCreatedAProject": "Ya has <1>entrenado un proyecto</1> con estos datos"
   },
   "account": {
     "upgrade": {

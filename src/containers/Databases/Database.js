@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 
 import { get } from "../../helpers/api";
 import { ProjectFromDBModal } from "../Modals";
@@ -18,9 +18,12 @@ export function Database({ history }) {
 
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState(null);
-  const [selectedFullTable, setSelectedFullTable] = useState(null);
   const [headers, setHeaders] = useState(null);
   const [rows, setRows] = useState(null);
+  const [additionalInfo, setAdditinalInfo] = useState({
+    has_project: false,
+    project: null,
+  });
 
   const [showModal, setShowModal] = useState(false);
 
@@ -43,14 +46,18 @@ export function Database({ history }) {
         const data = await (
           await get(`databases/${database.id}/tables/${selectedTable}`)
         ).data;
-        setHeaders(data.rows[0]);
-        setRows(data.rows.slice(1, data.rows.length));
+
+        const { rows, project, has_project } = data;
+
+        setHeaders(rows[0]);
+        setRows(rows.slice(1, rows.length));
+        setAdditinalInfo({ project, has_project });
       })();
     }
   }, [selectedTable]);
 
   if (loadingDatabase) {
-    return <div>Loading...</div>;
+    return <div>{t("common.loading")}</div>;
   }
 
   function handleTrainModel() {
@@ -59,16 +66,14 @@ export function Database({ history }) {
 
   function handleChangeTable(e) {
     const { value } = e.target;
-    const table = JSON.parse(value);
-    setSelectedTable(table.table);
-    setSelectedFullTable(table);
+    setSelectedTable(value);
   }
 
   return (
     <div className="mt-4">
       <div className="flex flex-wrap h-24 content-center mb-12">
         <span className="mr-4 mt-auto mb-auto">
-          Take a quick look at the tables:
+          {t("database.takeAQuickLook")}
         </span>
         <select
           className="p-4 border-none w-48"
@@ -77,8 +82,8 @@ export function Database({ history }) {
         >
           <option value={null}>{null}</option>
           {tables.map((table, i) => (
-            <option key={i} value={JSON.stringify(table)}>
-              {table.table}
+            <option key={i} value={table}>
+              {table}
             </option>
           ))}
         </select>
@@ -86,17 +91,17 @@ export function Database({ history }) {
       {headers && headers.length && rows ? (
         <>
           <div className="mb-8">
-            {selectedFullTable && selectedFullTable.has_project ? (
-              <h3>
-                You already{" "}
+            {additionalInfo.has_project && additionalInfo.project ? (
+              <Trans i18nKey="database.alreadyCreatedAProject">
+                You already
                 <Link
                   className="text-indigo-500"
-                  to={`/app/projects/${selectedFullTable.project.id}`}
+                  to={`/app/projects/${additionalInfo.project.id}`}
                 >
-                  created a project
-                </Link>{" "}
-                with this data!
-              </h3>
+                  {t("database.createdAProject")}
+                </Link>
+                with this data
+              </Trans>
             ) : (
               <h3>
                 If everything looks good, you can{" "}

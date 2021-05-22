@@ -140,7 +140,7 @@ export function NewProject({ history }) {
           label,
           temporary_uuid: temporaryUuid,
           project_id: project.id,
-          from_database: null,
+          from_database: false,
         }
       );
       setLoadingProjectTrain(false);

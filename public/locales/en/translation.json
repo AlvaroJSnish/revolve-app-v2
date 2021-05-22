@@ -1,4 +1,7 @@
 {
+  "common": {
+    "loading": "Loading..."
+  },
   "auth": {
     "emailAddress": "Email",
     "password": "Password",
@@ -100,7 +103,21 @@
   "project": {
     "delete": "Delete",
     "correlation": "Correlation",
-    "watchingCharts": "Showing <1></1> charts"
+    "watchingCharts": "Showing <1></1> charts",
+    "tabs": {
+      "data": "Data",
+      "predictions": "Predictions",
+      "retraining": "Retraining"
+    },
+    "predict": "Predict",
+    "correlationWith": "correlation with"
+  },
+  "retrain": {
+    "fromDatabaseInfo": "As you have trained the project from a database, retraining is much easier: you can configure how often you want to train it, we take care of finding new information in your database and the entire process. You simply choose a period.",
+    "fromCSVInfo": "You can upload a CSV with new data (remember that you already know the old ones), as long as it maintains the same column structure as the previous one, and from that new data we will retrain the model.",
+    "days": "days",
+    "configure": "Configure",
+    "uploadCSV": "Upload CSV"
   },
   "databases": {
     "newDatabase": "New connection",
@@ -126,6 +143,11 @@
         "name": "Name"
       }
     }
+  },
+  "database": {
+    "takeAQuickLook": "Take a quick look at the tables: ",
+    "createdAProject": "trained a project",
+    "alreadyCreatedAProject": "You already <1>trained a project</1> with this data"
   },
   "account": {
     "upgrade": {

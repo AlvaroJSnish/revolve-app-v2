@@ -1,4 +1,5 @@
 import ChartComponent from "react-chartjs-2";
+import { useTranslation } from "react-i18next";
 
 export function Chart({
   sorted_correlation,
@@ -11,12 +12,13 @@ export function Chart({
   correlation_array,
   correlation,
 }) {
+  const { t } = useTranslation();
   function BuildConfig() {
     if (type === "scatter") {
       const dataToScatter = {
         datasets: [
           {
-            label: `${label} correlation with ${
+            label: `${label} ${t("project.correlationWith")} ${
               sorted_correlation[isFirst ? 0 : 1][0]
             }`,
             data: [],
@@ -132,7 +134,7 @@ export function Chart({
       const data = {
         datasets: [
           {
-            label: "First Dataset",
+            label: "Dataset",
             data: [],
             backgroundColor: "rgb(255, 99, 132)",
           },

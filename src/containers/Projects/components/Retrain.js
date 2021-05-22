@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { post } from "../../../helpers/api";
+import { useTranslation } from "react-i18next";
 
-export function Retrain({ project }) {
+export function Retrain({ project, project_retrain = {} }) {
   const [days, setDays] = useState(5);
   const { created_from_database, project: projectId } = project;
 
@@ -16,8 +17,9 @@ export function Retrain({ project }) {
         setDays={setDays}
         created_from_database={created_from_database}
         trainFromDatabase={trainFromDatabase}
+        project_retrain={project_retrain}
       />
-      <FromCSV />
+      <FromCSV project_retrain={project_retrain} />
     </div>
   );
 }
@@ -27,35 +29,42 @@ function FromDatabase({
   days,
   setDays,
   trainFromDatabase,
+  project_retrain,
 }) {
+  const { t } = useTranslation();
+
   if (created_from_database) {
     return (
       <div className="shadow rounded p-4 grid grid-cols-1 gap-12 md:grid-cols-2">
         <div>
-          <span>
-            Como has entrenado el proyecto a partir de una base de datos, el
-            reentrenamiento es mucho más fácil: puedes configurar cada cuánto
-            tiempo quieres entrenarlo, nosotros nos encargamos de buscar la
-            información nueva en tu base de datos y de todo el proceso. Tú
-            simplemente elige un período.
-          </span>
+          <span>{t("retrain.fromDatabaseInfo")}</span>
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
           <select
-            value={days}
+            value={project_retrain.scheduled_every || days}
+            disabled={project_retrain.scheduled}
             onChange={(e) => setDays(e.target.value)}
-            className="rounded shadow border-0 md:w-64 sm:w-32 h-12"
+            className={`
+              rounded shadow border-0 md:w-64 sm:w-32 h-12 ${
+                project_retrain.scheduled && "opacity-50"
+              }
+            `}
           >
-            <option value={5}>5 días</option>
-            <option value={7}>7 días</option>
-            <option value={14}>14 días</option>
-            <option value={31}>31 días</option>
+            <option value={5}>5 {t("retrain.days")}</option>
+            <option value={7}>7 {t("retrain.days")}</option>
+            <option value={14}>14 {t("retrain.days")}</option>
+            <option value={31}>31 {t("retrain.days")}</option>
           </select>
           <button
             onClick={trainFromDatabase}
-            className="primary bg-indigo-600 text-white rounded shadow border-0 md:w-64 sm:w-32 h-12"
+            disabled={project_retrain.scheduled}
+            className={`
+              primary bg-indigo-600 text-white rounded shadow border-0 md:w-64 sm:w-32 h-12 ${
+                project_retrain.scheduled && "opacity-50"
+              }
+            `}
           >
-            Configurar
+            {t("retrain.configure")}
           </button>
         </div>
       </div>
@@ -65,19 +74,22 @@ function FromDatabase({
   return null;
 }
 
-function FromCSV() {
+function FromCSV({ project_retrain }) {
+  const { t } = useTranslation();
   return (
     <div className="shadow rounded p-4 grid grid-cols-1 gap-12 md:grid-cols-2">
       <div>
-        <span>
-          Puedes subir un CSV con datos nuevos (recuerda que los antiguos ya los
-          conoce), siempre y cuando mantenga la misma estructura de columnas que
-          el anterior, y a partir de esos datos nuevos reentrenaremos el modelo.
-        </span>
+        <span>{t("retrain.fromCSVInfo")}</span>
       </div>
       <div className="mt-auto">
-        <button className="primary bg-indigo-600 text-white rounded shadow border-0 md:w-64 sm:w-32 h-12">
-          Subir CSV
+        <button
+          disabled={project_retrain.scheduled}
+          className={`
+              primary bg-indigo-600 text-white rounded shadow border-0 md:w-64 sm:w-32 h-12 ${
+                project_retrain.scheduled && "opacity-50"
+              }`}
+        >
+          {t("retrain.uploadCSV")}
         </button>
       </div>
     </div>
