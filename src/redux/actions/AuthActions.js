@@ -126,3 +126,19 @@ export const dismissMoreDatabasesModal =
       history.push("/app");
     }
   };
+
+export const showMoreGroupsModal = (data) => (dispatch) => {
+  dispatch({
+    type: authTypes.SHOW_MORE_GROUPS_MODAL,
+    payload: { data },
+  });
+};
+
+export const dismissMoreGroupsModal = (history, account_type) => (dispatch) => {
+  dispatch({
+    type: authTypes.DISMISS_MORE_GROUPS_MODAL,
+  });
+  if (account_type === "TRIAL_ACCOUNT") {
+    history.push("/app");
+  }
+};

@@ -6,7 +6,11 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { SectionHeader } from "./SectionHeader";
-import { logout, showMoreDatabasesModal } from "../redux/actions/AuthActions";
+import {
+  logout,
+  showMoreDatabasesModal,
+  showMoreGroupsModal,
+} from "../redux/actions/AuthActions";
 import { clearNotifications } from "../redux/actions/ProjectActions";
 import { get } from "../helpers/api";
 
@@ -17,12 +21,21 @@ const navigation = [
     path: "/app/projects",
     locale: "nav.projects",
     pro: false,
+    route: "projects",
   },
   {
     name: "Databases",
     path: "/app/databases",
     locale: "nav.databases",
     pro: true,
+    route: "databases",
+  },
+  {
+    name: "Groups",
+    path: "/app/groups",
+    locale: "nav.groups",
+    pro: true,
+    route: "groups",
   },
 ];
 
@@ -124,15 +137,21 @@ export function AppContainer({ children }) {
     dispatch(logout(history));
   }
 
-  async function onNavigateToDatabase() {
+  async function onNavigate(route) {
     const { available, slots, account_type } = await (
-      await get("users/available-databases")
+      await get(`users/available-${route}`)
     ).data;
 
     if (available) {
-      history.push(`${path}/databases`);
+      history.push(`${path}/${route}`);
     } else {
-      dispatch(showMoreDatabasesModal({ account_type, available, slots }));
+      if (route === "databases") {
+        dispatch(showMoreDatabasesModal({ account_type, available, slots }));
+      }
+
+      if (route === "groups") {
+        dispatch(showMoreGroupsModal({ account_type, available, slots }));
+      }
     }
   }
 
@@ -158,11 +177,11 @@ export function AppContainer({ children }) {
                   </div>
                   <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                     {navigation.map((item) => {
-                      if (item.name === "Databases") {
+                      if (item.pro) {
                         return (
                           <button
                             key={item.name}
-                            onClick={onNavigateToDatabase}
+                            onClick={() => onNavigate(item.route)}
                             className={classNames(
                               item.path === window.location.pathname
                                 ? "border-indigo-500 text-gray-900"
@@ -300,25 +319,59 @@ export function AppContainer({ children }) {
 
             <Disclosure.Panel className="sm:hidden">
               <div className="pt-2 pb-3 space-y-1">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={classNames(
-                      item.path === window.location.pathname
-                        ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                        : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800",
-                      "block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
-                    )}
-                    aria-current={
-                      item.path === window.location.pathname
-                        ? "page"
-                        : undefined
-                    }
-                  >
-                    {t(item.locale)}
-                  </Link>
-                ))}
+                {navigation.map((item) => {
+                  if (item.pro) {
+                    return (
+                      <button
+                        key={item.name}
+                        onClick={() => onNavigate(item.route)}
+                        className={classNames(
+                          item.path === window.location.pathname
+                            ? "bg-indigo-50 border-indigo-500 text-indigo-700"
+                            : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800",
+                          "block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+                        )}
+                        aria-current={
+                          item.path === window.location.pathname
+                            ? "page"
+                            : undefined
+                        }
+                      >
+                        {t(item.locale)}
+                        {item.pro && (
+                          <span className="absolute right-0 bottom-0 text-indigo-500">
+                            PRO
+                          </span>
+                        )}
+                      </button>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className={classNames(
+                        item.path === window.location.pathname
+                          ? "bg-indigo-50 border-indigo-500 text-indigo-700"
+                          : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800",
+                        "block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+                      )}
+                      aria-current={
+                        item.path === window.location.pathname
+                          ? "page"
+                          : undefined
+                      }
+                    >
+                      {t(item.locale)}
+                      {item.pro && (
+                        <span className="absolute right-0 bottom-0 text-indigo-500">
+                          PRO
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
               </div>
               <div className="pt-4 pb-3 border-t border-gray-200">
                 <div className="flex items-center px-4">

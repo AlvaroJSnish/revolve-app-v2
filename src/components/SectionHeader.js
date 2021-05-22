@@ -6,6 +6,7 @@ import { get } from "../helpers/api";
 import { useDispatch } from "react-redux";
 import {
   showMoreDatabasesModal,
+  showMoreGroupsModal,
   showMoreProjectsModal,
 } from "../redux/actions/AuthActions";
 
@@ -107,6 +108,18 @@ export function SectionHeader() {
         </button>
       );
     }
+
+    if (pathname === "/app/groups") {
+      return (
+        <button
+          // to={`${path}/databases/new-database`}
+          onClick={onNewGroup}
+          className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          {t("groups.newGroup")}
+        </button>
+      );
+    }
   }
 
   async function onNewProject() {
@@ -130,6 +143,18 @@ export function SectionHeader() {
       history.push(`${path}/databases/new-database`);
     } else {
       dispatch(showMoreDatabasesModal({ account_type, available, slots }));
+    }
+  }
+
+  async function onNewGroup() {
+    const { available, slots, account_type } = await (
+      await get("users/available-groups")
+    ).data;
+
+    if (available) {
+      history.push(`${path}/groups/new-group`);
+    } else {
+      dispatch(showMoreGroupsModal({ account_type, available, slots }));
     }
   }
 

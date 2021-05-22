@@ -25,7 +25,9 @@
     "account": "cuenta",
     "settings": "ajustes",
     "databases": "bases de datos",
-    "new-database": "nueva conexión a bdd"
+    "new-database": "nueva conexión a bdd",
+    "groups": "grupos",
+    "new-group": "nuevo grupo"
   },
   "nav": {
     "dashboard": "Inicio",
@@ -33,7 +35,8 @@
     "signout": "Cerrar sesión",
     "profile": "Perfil",
     "settings": "Ajustes",
-    "databases": "Bases de datos"
+    "databases": "Bases de datos",
+    "groups": "Grupos"
   },
   "notifications": {
     "clearNotifications": "Limpiar notificaciones",
@@ -158,7 +161,12 @@
       "TRIAL_ACCOUNT": "cuenta de prueba",
       "moreProjectsMessage": "Tu {{ translatedAccountType }} ha llegado a su límite máximo de proyectos, para continuar creando más trata de hacer hueco o suscríbete a un plan superior.",
       "moreDatabasesMessage": "Tu {{ translatedAccountType }} ha llegado a su límite máximo de bases de datos, para continuar creando más trata de hacer hueco o suscríbete a un plan superior.",
-      "databasesTrialAccount": "La cuenta de prueba no tiene acceso a bases de datos, si lo deseas, puedes suscribirte a un plan superior."
+      "moreGroupsMessage": "Tu {{ translatedAccountType }} ha llegado a su límite máximo de grupos, para continuar creando más trata de hacer hueco o suscríbete a un plan superior.",
+      "databasesTrialAccount": "La cuenta de prueba no tiene acceso a bases de datos, si lo deseas, puedes suscribirte a un plan superior.",
+      "groupsTrialAccount": "La cuenta de prueba no tiene acceso a grupos, si lo deseas, puedes suscribirte a un plan superior."
     }
+  },
+  "groups": {
+    "newGroup": "Nuevo grupo"
   }
 }

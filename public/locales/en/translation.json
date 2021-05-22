@@ -25,7 +25,9 @@
     "account": "account",
     "settings": "settings",
     "databases": "databases",
-    "new-database": "new database connection"
+    "new-database": "new database connection",
+    "groups": "groups",
+    "new-group": "new group"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -33,7 +35,8 @@
     "signout": "Sign out",
     "profile": "Profile",
     "settings": "Settings",
-    "databases": "Databases"
+    "databases": "Databases",
+    "groups": "Groups"
   },
   "notifications": {
     "clearNotifications": "Clear notifications",
@@ -160,5 +163,8 @@
       "moreDatabasesMessage": "Your {{ translatedAccountType }} has reached its maximum database limit, to continue creating more try to make room or subscribe to a higher plan.",
       "databasesTrialAccount": "The trial account does not have access to databases, if you wish, you can subscribe to a higher plan."
     }
+  },
+  "groups": {
+    "newGroup": "New group"
   }
 }

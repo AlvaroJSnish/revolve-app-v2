@@ -11,6 +11,7 @@ import { Dashboard } from "../containers/Dashboard";
 import {
   MoreDatabasesModal,
   MoreProjectsModal,
+  MoreGroupsModal,
   UpgradeAccountModal,
 } from "../containers/Modals";
 
@@ -27,6 +28,7 @@ export function Navigator() {
         <UpgradeAccountModal />
         <MoreProjectsModal />
         <MoreDatabasesModal />
+        <MoreGroupsModal />
       </Router>
     </Suspense>
   );

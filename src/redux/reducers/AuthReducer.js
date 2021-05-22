@@ -11,8 +11,10 @@ export const authState = {
 
   showUpgradeModal: false,
   showMoreProjectsModal: false,
+  showMoreGroupsModal: false,
   moreProjectsData: {},
   moreDatabasesData: {},
+  moreGroupsData: {},
 };
 
 export default function AuthReducer(state = authState, { type, payload }) {
@@ -96,6 +98,21 @@ export default function AuthReducer(state = authState, { type, payload }) {
       return {
         ...state,
         showMoreDatabasesModal: false,
+      };
+    }
+
+    case authTypes.SHOW_MORE_GROUPS_MODAL: {
+      return {
+        ...state,
+        showMoreGroupsModal: true,
+        moreGroupsData: { ...payload.data },
+      };
+    }
+
+    case authTypes.DISMISS_MORE_GROUPS_MODAL: {
+      return {
+        ...state,
+        showMoreGroupsModal: false,
       };
     }
 
