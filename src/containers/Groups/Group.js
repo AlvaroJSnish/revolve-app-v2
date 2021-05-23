@@ -10,7 +10,13 @@ import {
 } from "@heroicons/react/outline";
 
 import { deletes } from "../../helpers/api";
-import { fetchGroupRequest } from "../../redux/actions/GroupsActions";
+import {
+  fetchGroupRequest,
+  showAddDatabaseToGroupModal,
+  showAddProjectToGroupModal,
+} from "../../redux/actions/GroupsActions";
+import { AddProjectToGroupModal } from "../Modals/AddProjectToGroupModal";
+import { AddDatabaseToGroupModal } from "../Modals/AddDatabaseToGroupModal";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -46,6 +52,8 @@ export function Group({ history }) {
       <Users tab={tab} users={group.users} />
       <Projects tab={tab} projects={group.projects} />
       <Databases tab={tab} databases={group.databases} />
+      <AddProjectToGroupModal />
+      <AddDatabaseToGroupModal />
     </div>
   );
 }
@@ -139,9 +147,14 @@ function Users({ users, tab }) {
 
 function Projects({ projects, tab }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   if (tab !== "projects") {
     return null;
+  }
+
+  function handleAddProject() {
+    dispatch(showAddProjectToGroupModal());
   }
 
   return (
@@ -150,7 +163,10 @@ function Projects({ projects, tab }) {
         {(!projects || !projects.length) && (
           <h3 className="text-gray-400">{t("groups.noProjects")}</h3>
         )}
-        <button className="ml-auto bg-indigo-600 p-2 rounded shadow text-white">
+        <button
+          onClick={handleAddProject}
+          className="ml-auto bg-indigo-600 p-2 rounded shadow text-white"
+        >
           {t("groups.addProject")}
         </button>
       </div>
@@ -160,9 +176,14 @@ function Projects({ projects, tab }) {
 
 function Databases({ databases, tab }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   if (tab !== "databases") {
     return null;
+  }
+
+  function handleAddDatabase() {
+    dispatch(showAddDatabaseToGroupModal());
   }
 
   return (
@@ -171,7 +192,10 @@ function Databases({ databases, tab }) {
         {(!databases || !databases.length) && (
           <h3 className="text-gray-400">{t("groups.noDatabases")}</h3>
         )}
-        <button className="ml-auto bg-indigo-600 p-2 rounded shadow text-white">
+        <button
+          onClick={handleAddDatabase}
+          className="ml-auto bg-indigo-600 p-2 rounded shadow text-white"
+        >
           {t("groups.addDatabase")}
         </button>
       </div>

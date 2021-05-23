@@ -171,6 +171,11 @@
       "projects": "Projects",
       "databases": "Databases"
     },
+    "createGroup": {
+      "title": "Create a new group",
+      "name": "Group name",
+      "namePlaceholder": "Name"
+    },
     "invitationCode": "Invitation code: ",
     "noUsers": "No users",
     "noProjects": "No projects",

@@ -9,6 +9,10 @@ const initialState = {
   loadingGroup: false,
   loadingCreateGroup: false,
   createGroupError: null,
+
+  showJoinGroupModal: false,
+  showAddProjectToGroupModal: false,
+  showAddDatabaseToGroupModal: false,
 };
 
 export default function groupsReducer(state = initialState, { type, payload }) {
@@ -91,6 +95,30 @@ export default function groupsReducer(state = initialState, { type, payload }) {
         ...state,
         showCreateGroupModal: false,
       };
+    }
+
+    case groupsTypes.SHOW_JOIN_GROUP_MODAL: {
+      return { ...state, showJoinGroupModal: true };
+    }
+
+    case groupsTypes.DISMISS_JOIN_GROUP_MODAL: {
+      return { ...state, showJoinGroupModal: false };
+    }
+
+    case groupsTypes.SHOW_ADD_DATABASE_TO_GROUP_MODAL: {
+      return { ...state, showAddDatabaseToGroupModal: true };
+    }
+
+    case groupsTypes.DISMISS_ADD_DATABASE_TO_GROUP_MODAL: {
+      return { ...state, showAddDatabaseToGroupModal: false };
+    }
+
+    case groupsTypes.SHOW_ADD_PROJECT_TO_GROUP_MODAL: {
+      return { ...state, showAddProjectToGroupModal: true };
+    }
+
+    case groupsTypes.DISMISS_ADD_PROJECT_TO_GROUP_MODAL: {
+      return { ...state, showAddProjectToGroupModal: false };
     }
 
     default: {

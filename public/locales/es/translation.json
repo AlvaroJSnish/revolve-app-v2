@@ -173,11 +173,22 @@
       "projects": "Proyectos",
       "databases": "Bases de datos"
     },
+    "createGroup": {
+      "title": "Crear un grupo nuevo",
+      "name": "Nombre del grupo",
+      "namePlaceholder": "Nombre"
+    },
     "invitationCode": "Código de invitación: ",
     "noUsers": "Aún no hay usuarios",
     "noProjects": "Aún no hay proyectos",
     "noDatabases": "Aún no hay bases de datos",
     "addProject": "Añadir un proyecto",
-    "addDatabase": "Añadir una base de datos"
+    "addDatabase": "Añadir una base de datos",
+    "addProjectModal": {
+      "title": "Elige un proyecto a añadir"
+    },
+    "addDatabaseModal": {
+      "title": "Elige una base de datos a añadir"
+    }
   }
 }

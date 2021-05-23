@@ -87,3 +87,39 @@ const createGroup = (name) => async (dispatch) => {
     });
   }
 };
+
+export const showJoinGroupModal = () => (dispatch) => {
+  dispatch({
+    type: groupsTypes.SHOW_JOIN_GROUP_MODAL,
+  });
+};
+
+export const dismissJoinGroupModal = () => (dispatch) => {
+  dispatch({
+    type: groupsTypes.DISMISS_JOIN_GROUP_MODAL,
+  });
+};
+
+export const showAddProjectToGroupModal = () => (dispatch) => {
+  dispatch({
+    type: groupsTypes.SHOW_ADD_PROJECT_TO_GROUP_MODAL,
+  });
+};
+
+export const dismissAddProjectToGroupModal = () => (dispatch) => {
+  dispatch({
+    type: groupsTypes.DISMISS_ADD_PROJECT_TO_GROUP_MODAL,
+  });
+};
+
+export const showAddDatabaseToGroupModal = () => (dispatch) => {
+  dispatch({
+    type: groupsTypes.SHOW_ADD_DATABASE_TO_GROUP_MODAL,
+  });
+};
+
+export const dismissAddDatabaseToGroupModal = () => (dispatch) => {
+  dispatch({
+    type: groupsTypes.DISMISS_ADD_DATABASE_TO_GROUP_MODAL,
+  });
+};
