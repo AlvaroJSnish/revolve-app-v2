@@ -14,7 +14,9 @@ import { NewProject } from "../Projects/NewProject";
 import { Databases } from "../Databases";
 import { NewDatabase } from "../Databases/NewDatabase";
 import { Database } from "../Databases/Database";
-import { UpgradeAccountModal } from "../Modals";
+import { Groups } from "../Groups";
+import { CreateGroupModal } from "../Modals";
+import { Group } from "../Groups/Group";
 
 export function Dashboard() {
   const { path } = useRouteMatch();
@@ -43,6 +45,8 @@ export function Dashboard() {
             path={`${path}/databases/:id`}
             component={Database}
           />
+          <PrivateRoute exact path={`${path}/groups`} component={Groups} />
+          <PrivateRoute exact path={`${path}/groups/:id`} component={Group} />
           <PrivateRoute exact path={`${path}/dashboard`} component={Home} />
           <PrivateRoute exact path={`${path}/projects`} component={Projects} />
           <PrivateRoute
@@ -59,6 +63,7 @@ export function Dashboard() {
           <PrivateRoute exact path={`${path}/settings`} component={Settings} />
         </Switch>
       </AppContainer>
+      <CreateGroupModal />
     </Suspense>
   );
 }

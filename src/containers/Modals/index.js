@@ -3,3 +3,4 @@ export * from "./MoreProjectsModal";
 export * from "./ProjectFromDBModal";
 export * from "./UpgradeAccountModal";
 export * from "./MoreGroupsModal";
+export * from "./CreateGroupModal";

@@ -165,6 +165,17 @@
     }
   },
   "groups": {
-    "newGroup": "New group"
+    "newGroup": "New group",
+    "tabs": {
+      "users": "Users",
+      "projects": "Projects",
+      "databases": "Databases"
+    },
+    "invitationCode": "Invitation code: ",
+    "noUsers": "No users",
+    "noProjects": "No projects",
+    "noDatabases": "No databases",
+    "addProject": "Add project",
+    "addDatabase": "Add database"
   }
 }

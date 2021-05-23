@@ -5,6 +5,7 @@ import socketReducer from "./WebsocketReducer";
 import projectsReducer from "./ProjectReducer";
 import userStatsReducer from "./UserStatsReducer";
 import databasesReducer from "./DatabasesReducer";
+import groupsReducer from "./GroupsReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   projects: projectsReducer,
   userStats: userStatsReducer,
   databases: databasesReducer,
+  groups: groupsReducer,
 });

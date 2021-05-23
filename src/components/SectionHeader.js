@@ -9,6 +9,7 @@ import {
   showMoreGroupsModal,
   showMoreProjectsModal,
 } from "../redux/actions/AuthActions";
+import { showCreateGroupModal } from "../redux/actions/GroupsActions";
 
 const uuidRegex = new RegExp(
   /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
@@ -152,7 +153,8 @@ export function SectionHeader() {
     ).data;
 
     if (available) {
-      history.push(`${path}/groups/new-group`);
+      // history.push(`${path}/groups/new-group`);
+      dispatch(showCreateGroupModal());
     } else {
       dispatch(showMoreGroupsModal({ account_type, available, slots }));
     }

@@ -167,6 +167,17 @@
     }
   },
   "groups": {
-    "newGroup": "Nuevo grupo"
+    "newGroup": "Nuevo grupo",
+    "tabs": {
+      "users": "Usuarios",
+      "projects": "Proyectos",
+      "databases": "Bases de datos"
+    },
+    "invitationCode": "Código de invitación: ",
+    "noUsers": "Aún no hay usuarios",
+    "noProjects": "Aún no hay proyectos",
+    "noDatabases": "Aún no hay bases de datos",
+    "addProject": "Añadir un proyecto",
+    "addDatabase": "Añadir una base de datos"
   }
 }
