@@ -23,6 +23,28 @@ export const fetchDatabases = () => async (dispatch) => {
   }
 };
 
+export const fetchDatabasesLiteRequest = () => (dispatch) => {
+  dispatch({
+    type: databasesTypes.FETCH_DATABASES_LITE_REQUEST,
+  });
+  dispatch(fetchDatabasesLite());
+};
+
+export const fetchDatabasesLite = () => async (dispatch) => {
+  try {
+    const databasesLite = await (await get("databases-lite")).data;
+    dispatch({
+      type: databasesTypes.FETCH_DATABASES_LITE_SUCCESS,
+      payload: { databasesLite },
+    });
+  } catch (e) {
+    dispatch({
+      type: databasesTypes.FETCH_DATABASES_LITE_FAILURE,
+      payload: { error: e },
+    });
+  }
+};
+
 export const fetchDatabaseRequest = (id) => (dispatch) => {
   dispatch({
     type: databasesTypes.FETCH_DATABASE_REQUEST,
@@ -74,14 +96,13 @@ export const dismissConnection = (history) => (dispatch) => {
   history.goBack();
 };
 
-export const createDatabaseConnectionRequest = (values, history) => (
-  dispatch
-) => {
-  dispatch({
-    type: databasesTypes.CREATE_DATABASE_REQUEST,
-  });
-  dispatch(createDatabaseConnection(values, history));
-};
+export const createDatabaseConnectionRequest =
+  (values, history) => (dispatch) => {
+    dispatch({
+      type: databasesTypes.CREATE_DATABASE_REQUEST,
+    });
+    dispatch(createDatabaseConnection(values, history));
+  };
 
 const createDatabaseConnection = (values, history) => async (dispatch) => {
   try {

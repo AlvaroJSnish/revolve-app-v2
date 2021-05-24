@@ -13,6 +13,9 @@ const initialState = {
   showJoinGroupModal: false,
   showAddProjectToGroupModal: false,
   showAddDatabaseToGroupModal: false,
+
+  loadingAddToGroup: false,
+  addingToGroupError: null,
 };
 
 export default function groupsReducer(state = initialState, { type, payload }) {
@@ -119,6 +122,27 @@ export default function groupsReducer(state = initialState, { type, payload }) {
 
     case groupsTypes.DISMISS_ADD_PROJECT_TO_GROUP_MODAL: {
       return { ...state, showAddProjectToGroupModal: false };
+    }
+
+    case groupsTypes.ADD_OBJECT_TO_GROUP_REQUEST: {
+      return { ...state, loadingAddToGroup: true };
+    }
+
+    case groupsTypes.ADD_OBJECT_TO_GROUP_SUCCESS: {
+      return {
+        ...state,
+        loadingAddToGroup: false,
+        addingToGroupError: null,
+        group: { ...payload.group },
+      };
+    }
+
+    case groupsTypes.ADD_OBJECT_TO_GROUP_FAILURE: {
+      return {
+        ...state,
+        loadingAddToGroup: false,
+        addingToGroupError: payload.error,
+      };
     }
 
     default: {

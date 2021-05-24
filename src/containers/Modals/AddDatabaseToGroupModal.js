@@ -4,8 +4,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { DatabaseIcon } from "@heroicons/react/outline";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
-import { fetchDatabases } from "../../redux/actions/DatabasesActions";
-import { dismissAddDatabaseToGroupModal } from "../../redux/actions/GroupsActions";
+import { fetchDatabasesLite } from "../../redux/actions/DatabasesActions";
+import {
+  addObjectToGroupRequest,
+  dismissAddDatabaseToGroupModal,
+} from "../../redux/actions/GroupsActions";
 import { post } from "../../helpers/api";
 
 function classNames(...classes) {
@@ -25,7 +28,7 @@ export function AddDatabaseToGroupModal({ groupId }) {
   const cancelButtonRef = useRef(null);
 
   useEffect(() => {
-    dispatch(fetchDatabases());
+    dispatch(fetchDatabasesLite());
   }, []);
 
   function handleClose() {
@@ -33,7 +36,13 @@ export function AddDatabaseToGroupModal({ groupId }) {
   }
 
   async function handleCreate() {
-    await post(`groups/${groupId}/add-database/${selectedDatabase}`);
+    dispatch(
+      addObjectToGroupRequest({
+        groupId,
+        route: "database",
+        object: selectedDatabase,
+      })
+    );
   }
 
   return (

@@ -4,9 +4,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { FolderIcon } from "@heroicons/react/outline";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
-import { dismissAddProjectToGroupModal } from "../../redux/actions/GroupsActions";
-import { fetchProjects } from "../../redux/actions/ProjectActions";
-import { post } from "../../helpers/api";
+import {
+  addObjectToGroupRequest,
+  dismissAddProjectToGroupModal,
+} from "../../redux/actions/GroupsActions";
+import { fetchProjectsLiteRequest } from "../../redux/actions/ProjectActions";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -21,14 +23,15 @@ export function AddProjectToGroupModal({ groupId }) {
     (state) => state.groups,
     shallowEqual
   );
-  const {
-    projects: { results },
-  } = useSelector((state) => state.projects, shallowEqual);
+  const { projectsLite = [] } = useSelector(
+    (state) => state.projects,
+    shallowEqual
+  );
 
   const cancelButtonRef = useRef(null);
 
   useEffect(() => {
-    dispatch(fetchProjects());
+    dispatch(fetchProjectsLiteRequest());
   }, []);
 
   function handleClose() {
@@ -36,9 +39,13 @@ export function AddProjectToGroupModal({ groupId }) {
   }
 
   async function handleCreate() {
-    // dispatch(createGroupRequest(name));
-    // setName("");
-    await post(`groups/${groupId}/add-project/${selectedProject}`);
+    dispatch(
+      addObjectToGroupRequest({
+        groupId,
+        route: "project",
+        object: selectedProject,
+      })
+    );
   }
 
   return (
@@ -103,8 +110,8 @@ export function AddProjectToGroupModal({ groupId }) {
                         onChange={(e) => setSelectedProject(e.target.value)}
                       >
                         <option value={""}>{""}</option>
-                        {results.map((result) => (
-                          <option key={result.id} value={result.project}>
+                        {projectsLite.map((result) => (
+                          <option key={result.id} value={result.id}>
                             {result.project_name}
                           </option>
                         ))}

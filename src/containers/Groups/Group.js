@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
-import {
-  ChevronUpIcon,
-  ChevronDownIcon,
-  ClipboardCopyIcon,
-} from "@heroicons/react/outline";
+import { ClipboardCopyIcon } from "@heroicons/react/outline";
 
 import { deletes } from "../../helpers/api";
 import {
@@ -52,6 +48,7 @@ export function Group({ history }) {
       <Users tab={tab} users={group.users} />
       <Projects tab={tab} projects={group.projects} />
       <Databases tab={tab} databases={group.databases} />
+
       <AddProjectToGroupModal groupId={id} />
       <AddDatabaseToGroupModal groupId={id} />
     </div>
@@ -67,6 +64,10 @@ function Header({ name, id, invitation_code }) {
     history.push("/app/groups");
   }
 
+  async function copyCode() {
+    await navigator.clipboard.writeText(invitation_code);
+  }
+
   return (
     <div className="md:flex md:items-center md:justify-between mt-8 mb-8">
       <div className="flex-1 min-w-0">
@@ -75,7 +76,10 @@ function Header({ name, id, invitation_code }) {
         </h2>
         <h3 className="text-gray-400 flex flex-row">
           {t("groups.invitationCode")} {invitation_code}
-          <ClipboardCopyIcon className="w-6 ml-2 cursor-pointer" />
+          <ClipboardCopyIcon
+            className="w-6 ml-2 cursor-pointer"
+            onClick={copyCode}
+          />
         </h3>
       </div>
       <div className="mt-4 flex md:mt-0 md:ml-4">
@@ -170,6 +174,47 @@ function Projects({ projects, tab }) {
           {t("groups.addProject")}
         </button>
       </div>
+      <table className="min-w-full divide-y divide-gray-200 mt-6">
+        <thead className="bg-gray-50">
+          <tr>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {t("projects.table.header.name")}
+            </th>
+            <th scope="col" className="px-6 py-3">
+              <span className="sr-only">{t("projects.table.view")}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {projects.map((project) => (
+            <tr key={project.id}>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex items-center">
+                  <div className="ml-0">
+                    <div className="text-sm font-medium text-gray-900">
+                      {project.project_name}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {project.project_type}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <Link
+                  to={`/app/projects/${project.id}`}
+                  className="text-indigo-600 hover:text-indigo-900"
+                >
+                  {t("projects.table.view")}
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -199,6 +244,44 @@ function Databases({ databases, tab }) {
           {t("groups.addDatabase")}
         </button>
       </div>
+      <table className="min-w-full divide-y divide-gray-200 mt-6">
+        <thead className="bg-gray-50">
+          <tr>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              {t("databases.table.header.name")}
+            </th>
+            <th scope="col" className="px-6 py-3">
+              <span className="sr-only">{t("projects.table.view")}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {databases.map((database) => (
+            <tr key={database.id}>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="flex items-center">
+                  <div className="ml-0">
+                    <div className="text-sm font-medium text-gray-900">
+                      {database.database_name}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <Link
+                  to={`/app/databases/${database.id}`}
+                  className="text-indigo-600 hover:text-indigo-900"
+                >
+                  {t("projects.table.view")}
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

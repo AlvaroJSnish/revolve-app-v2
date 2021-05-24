@@ -19,6 +19,10 @@ const initialState = {
   loadingPrediction: false,
   prediction: null,
   predictionError: null,
+
+  projectsLite: [],
+  projectsLiteError: null,
+  loadingProjectsLite: false,
 };
 
 export default function projectReducer(
@@ -122,6 +126,27 @@ export default function projectReducer(
         loadingPrediction: false,
         predictionError: payload.error,
       };
+
+    case projectTypes.FETCH_PROJECTS_LITE_REQUEST: {
+      return { ...state, loadingProjectsLite: true };
+    }
+
+    case projectTypes.FETCH_PROJECTS_LITE_SUCCESS: {
+      return {
+        ...state,
+        loadingProjectsLite: false,
+        projectsLite: [...payload.projectsLite],
+        projectsLiteError: null,
+      };
+    }
+
+    case projectTypes.FETCH_PROJECTS_LITE_FAILURE: {
+      return {
+        ...state,
+        loadingProjectsLite: false,
+        projectsLiteError: payload.error,
+      };
+    }
 
     default:
       return { ...state };

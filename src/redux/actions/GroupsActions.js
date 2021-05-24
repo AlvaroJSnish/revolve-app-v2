@@ -123,3 +123,42 @@ export const dismissAddDatabaseToGroupModal = () => (dispatch) => {
     type: groupsTypes.DISMISS_ADD_DATABASE_TO_GROUP_MODAL,
   });
 };
+
+export const addObjectToGroupRequest =
+  ({ object, groupId, route }) =>
+  (dispatch) => {
+    dispatch({
+      type: groupsTypes.ADD_OBJECT_TO_GROUP_REQUEST,
+    });
+
+    dispatch(addObjectToGroup({ object, groupId, route }));
+  };
+{
+}
+const addObjectToGroup =
+  ({ object, groupId, route }) =>
+  async (dispatch) => {
+    try {
+      const group = await (
+        await post(`groups/${groupId}/add-${route}/${object}`)
+      ).data;
+
+      dispatch({
+        type: groupsTypes.ADD_OBJECT_TO_GROUP_SUCCESS,
+        payload: { group: group.group },
+      });
+
+      if (route === "project") {
+        dispatch(dismissAddProjectToGroupModal());
+      }
+
+      if (route === "database") {
+        dispatch(dismissAddDatabaseToGroupModal());
+      }
+    } catch (e) {
+      dispatch({
+        type: groupsTypes.ADD_OBJECT_TO_GROUP_FAILURE,
+        payload: { error: e && e.response && e.response.data },
+      });
+    }
+  };

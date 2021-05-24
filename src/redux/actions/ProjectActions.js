@@ -23,6 +23,28 @@ export const fetchProjects = () => async (dispatch) => {
   }
 };
 
+export const fetchProjectsLiteRequest = () => (dispatch) => {
+  dispatch({
+    type: projectTypes.FETCH_PROJECTS_LITE_REQUEST,
+  });
+  dispatch(fetchProjectsLite());
+};
+
+export const fetchProjectsLite = () => async (dispatch) => {
+  const projectsLite = await (await get("projects-lite")).data;
+  try {
+    dispatch({
+      type: projectTypes.FETCH_PROJECTS_LITE_SUCCESS,
+      payload: { projectsLite },
+    });
+  } catch (e) {
+    dispatch({
+      type: projectTypes.FETCH_PROJECTS_LITE_FAILURE,
+      payload: { error: e && e.response && e.response.data },
+    });
+  }
+};
+
 export const fetchProjectRequest = (id) => (dispatch) => {
   dispatch({
     type: projectTypes.FETCH_PROJECT_REQUEST,

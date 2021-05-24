@@ -1,4 +1,5 @@
 import { databasesTypes } from "../types/DatabasesTypes";
+import { projectTypes } from "../types/ProjectTypes";
 
 const initialState = {
   loadingDatabases: false,
@@ -14,6 +15,10 @@ const initialState = {
   connectingToDatabase: false,
   databaseConnectionStatus: null,
   databaseConnectionMessage: null,
+
+  databasesLite: [],
+  databasesLiteError: null,
+  loadingDatabasesLite: false,
 };
 
 export default function databasesReducer(
@@ -109,6 +114,27 @@ export default function databasesReducer(
         connectingToDatabase: false,
         databaseConnectionStatus: null,
         databaseConnectionMessage: null,
+      };
+    }
+
+    case databasesTypes.FETCH_DATABASES_LITE_REQUEST: {
+      return { ...state, loadingDatabasesLite: true };
+    }
+
+    case databasesTypes.FETCH_DATABASES_LITE_SUCCESS: {
+      return {
+        ...state,
+        loadingDatabasesLite: false,
+        databasesLite: [...payload.databasesLite],
+        databasesLiteError: null,
+      };
+    }
+
+    case databasesTypes.FETCH_DATABASES_LITE_FAILURE: {
+      return {
+        ...state,
+        loadingDatabasesLite: false,
+        databasesLiteError: payload.error,
       };
     }
 
