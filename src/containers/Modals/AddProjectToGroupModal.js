@@ -6,11 +6,17 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { dismissAddProjectToGroupModal } from "../../redux/actions/GroupsActions";
 import { fetchProjects } from "../../redux/actions/ProjectActions";
+import { post } from "../../helpers/api";
 
-export function AddProjectToGroupModal() {
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+export function AddProjectToGroupModal({ groupId }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [name, setName] = useState("");
+  const [selectedProject, setSelectedProject] = useState("");
+
   const { showAddProjectToGroupModal = false } = useSelector(
     (state) => state.groups,
     shallowEqual
@@ -29,9 +35,10 @@ export function AddProjectToGroupModal() {
     dispatch(dismissAddProjectToGroupModal());
   }
 
-  function handleCreate() {
+  async function handleCreate() {
     // dispatch(createGroupRequest(name));
     // setName("");
+    await post(`groups/${groupId}/add-project/${selectedProject}`);
   }
 
   return (
@@ -90,15 +97,16 @@ export function AddProjectToGroupModal() {
                       {t("groups.addProjectModal.title")}
                     </Dialog.Title>
                     <div className="mt-2">
-                      {/*<input*/}
-                      {/*  value={name}*/}
-                      {/*  onChange={(e) => setName(e.target.value)}*/}
-                      {/*  placeholder={t("groups.createGroup.namePlaceholder")}*/}
-                      {/*  className="p-4"*/}
-                      {/*/>*/}
-                      <select className="rounded border-gray-200">
+                      <select
+                        className="rounded border-gray-200"
+                        value={selectedProject}
+                        onChange={(e) => setSelectedProject(e.target.value)}
+                      >
+                        <option value={""}>{""}</option>
                         {results.map((result) => (
-                          <option key={result.id}>{result.project_name}</option>
+                          <option key={result.id} value={result.project}>
+                            {result.project_name}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -115,10 +123,13 @@ export function AddProjectToGroupModal() {
                 </button>
                 <button
                   type="button"
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  className={classNames(
+                    "transition delay-150 mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm",
+                    !selectedProject.length ? "opacity-50" : ""
+                  )}
                   onClick={handleCreate}
                   ref={cancelButtonRef}
-                  disabled={!name.trim().length}
+                  disabled={!selectedProject.length}
                 >
                   {t("account.upgrade.continue")}
                 </button>

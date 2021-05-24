@@ -1,7 +1,7 @@
 import { Fragment, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Dialog, Transition } from "@headlessui/react";
-import { AnnotationIcon } from "@heroicons/react/outline";
+import { UsersIcon } from "@heroicons/react/outline";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { dismissJoinGroupModal } from "../../redux/actions/GroupsActions";
@@ -68,7 +68,7 @@ export function JoinGroupModal() {
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <AnnotationIcon
+                    <UsersIcon
                       className="h-6 w-6 text-indigo-600"
                       aria-hidden="true"
                     />
@@ -78,18 +78,14 @@ export function JoinGroupModal() {
                       as="h3"
                       className="text-lg leading-6 font-medium text-gray-900"
                     >
-                      {t("groups.createGroup.title")}
+                      {t("groups.joinGroupModal.title")}
                     </Dialog.Title>
                     <div className="mt-2">
-                      {/*<div className="text-sm text-gray-500"></div>*/}
-                      <label className="mr-4">
-                        {t("groups.createGroup.name")}
-                      </label>
                       <input
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder={t("groups.createGroup.namePlaceholder")}
-                        className="p-4"
+                        placeholder={t("groups.joinGroupModal.invitationCode")}
+                        className="py-4 w-full"
                       />
                     </div>
                   </div>

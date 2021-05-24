@@ -17,6 +17,7 @@ import { Database } from "../Databases/Database";
 import { Groups } from "../Groups";
 import { CreateGroupModal } from "../Modals";
 import { Group } from "../Groups/Group";
+import { JoinGroupModal } from "../Modals/JoinGroupModal";
 
 export function Dashboard() {
   const { path } = useRouteMatch();
@@ -64,6 +65,7 @@ export function Dashboard() {
         </Switch>
       </AppContainer>
       <CreateGroupModal />
+      <JoinGroupModal />
     </Suspense>
   );
 }

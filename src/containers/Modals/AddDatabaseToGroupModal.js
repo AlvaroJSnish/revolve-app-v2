@@ -6,11 +6,17 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { fetchDatabases } from "../../redux/actions/DatabasesActions";
 import { dismissAddDatabaseToGroupModal } from "../../redux/actions/GroupsActions";
+import { post } from "../../helpers/api";
 
-export function AddDatabaseToGroupModal() {
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+export function AddDatabaseToGroupModal({ groupId }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [name, setName] = useState("");
+  const [selectedDatabase, setSelectedDatabase] = useState("");
+
   const { showAddDatabaseToGroupModal = false } = useSelector(
     (state) => state.groups,
     shallowEqual
@@ -26,9 +32,8 @@ export function AddDatabaseToGroupModal() {
     dispatch(dismissAddDatabaseToGroupModal());
   }
 
-  function handleCreate() {
-    // dispatch(createGroupRequest(name));
-    // setName("");
+  async function handleCreate() {
+    await post(`groups/${groupId}/add-database/${selectedDatabase}`);
   }
 
   return (
@@ -87,9 +92,14 @@ export function AddDatabaseToGroupModal() {
                       {t("groups.addDatabaseModal.title")}
                     </Dialog.Title>
                     <div className="mt-2">
-                      <select className="rounded border-gray-200">
+                      <select
+                        className="rounded border-gray-200"
+                        value={selectedDatabase}
+                        onChange={(e) => setSelectedDatabase(e.target.value)}
+                      >
+                        <option value={""}>{""}</option>
                         {databases.map((result) => (
-                          <option key={result.id}>
+                          <option key={result.id} value={result.id}>
                             {result.database_name}
                           </option>
                         ))}
@@ -108,10 +118,13 @@ export function AddDatabaseToGroupModal() {
                 </button>
                 <button
                   type="button"
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  className={classNames(
+                    "transition delay-150 mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm",
+                    !selectedDatabase.length ? "opacity-50" : ""
+                  )}
                   onClick={handleCreate}
                   ref={cancelButtonRef}
-                  disabled={!name.trim().length}
+                  disabled={!selectedDatabase.length}
                 >
                   {t("account.upgrade.continue")}
                 </button>

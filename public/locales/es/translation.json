@@ -168,6 +168,7 @@
   },
   "groups": {
     "newGroup": "Nuevo grupo",
+    "joinGroup": "Unirse a un grupo",
     "tabs": {
       "users": "Usuarios",
       "projects": "Proyectos",
@@ -177,6 +178,10 @@
       "title": "Crear un grupo nuevo",
       "name": "Nombre del grupo",
       "namePlaceholder": "Nombre"
+    },
+    "joinGroupModal": {
+      "title": "Unise a un grupo",
+      "invitationCode": "Código de invitación"
     },
     "invitationCode": "Código de invitación: ",
     "noUsers": "Aún no hay usuarios",

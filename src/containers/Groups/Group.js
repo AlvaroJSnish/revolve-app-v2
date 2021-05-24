@@ -52,8 +52,8 @@ export function Group({ history }) {
       <Users tab={tab} users={group.users} />
       <Projects tab={tab} projects={group.projects} />
       <Databases tab={tab} databases={group.databases} />
-      <AddProjectToGroupModal />
-      <AddDatabaseToGroupModal />
+      <AddProjectToGroupModal groupId={id} />
+      <AddDatabaseToGroupModal groupId={id} />
     </div>
   );
 }

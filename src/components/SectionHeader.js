@@ -9,7 +9,10 @@ import {
   showMoreGroupsModal,
   showMoreProjectsModal,
 } from "../redux/actions/AuthActions";
-import { showCreateGroupModal } from "../redux/actions/GroupsActions";
+import {
+  showCreateGroupModal,
+  showJoinGroupModal,
+} from "../redux/actions/GroupsActions";
 
 const uuidRegex = new RegExp(
   /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
@@ -112,13 +115,22 @@ export function SectionHeader() {
 
     if (pathname === "/app/groups") {
       return (
-        <button
-          // to={`${path}/databases/new-database`}
-          onClick={onNewGroup}
-          className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          {t("groups.newGroup")}
-        </button>
+        <>
+          <button
+            // to={`${path}/databases/new-database`}
+            onClick={onJoinGroup}
+            className="mr-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow text-indigo-600 bg-white-600 hover:bg-white-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white-500"
+          >
+            {t("groups.joinGroup")}
+          </button>{" "}
+          <button
+            // to={`${path}/databases/new-database`}
+            onClick={onNewGroup}
+            className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            {t("groups.newGroup")}
+          </button>
+        </>
       );
     }
   }
@@ -155,6 +167,19 @@ export function SectionHeader() {
     if (available) {
       // history.push(`${path}/groups/new-group`);
       dispatch(showCreateGroupModal());
+    } else {
+      dispatch(showMoreGroupsModal({ account_type, available, slots }));
+    }
+  }
+
+  async function onJoinGroup() {
+    const { available, slots, account_type } = await (
+      await get("users/available-groups")
+    ).data;
+
+    if (available) {
+      // history.push(`${path}/groups/new-group`);
+      dispatch(showJoinGroupModal());
     } else {
       dispatch(showMoreGroupsModal({ account_type, available, slots }));
     }
