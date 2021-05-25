@@ -4,12 +4,15 @@ import { Dialog, Transition } from "@headlessui/react";
 import { UsersIcon } from "@heroicons/react/outline";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
-import { dismissJoinGroupModal } from "../../redux/actions/GroupsActions";
+import {
+  dismissJoinGroupModal,
+  joinGroupRequest,
+} from "../../redux/actions/GroupsActions";
 
 export function JoinGroupModal() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [name, setName] = useState("");
+  const [invitationCode, setInvitationCode] = useState("");
   const { showJoinGroupModal = false } = useSelector(
     (state) => state.groups,
     shallowEqual
@@ -21,8 +24,7 @@ export function JoinGroupModal() {
   }
 
   function handleCreate() {
-    // dispatch(createGroupRequest(name));
-    // setName("");
+    dispatch(joinGroupRequest(invitationCode));
   }
 
   return (
@@ -80,12 +82,12 @@ export function JoinGroupModal() {
                     >
                       {t("groups.joinGroupModal.title")}
                     </Dialog.Title>
-                    <div className="mt-2">
+                    <div className="mt-2 w-full">
                       <input
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={invitationCode}
+                        onChange={(e) => setInvitationCode(e.target.value)}
                         placeholder={t("groups.joinGroupModal.invitationCode")}
-                        className="py-4 w-full"
+                        className="py-4 w-96"
                       />
                     </div>
                   </div>
@@ -104,7 +106,7 @@ export function JoinGroupModal() {
                   className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                   onClick={handleCreate}
                   ref={cancelButtonRef}
-                  disabled={!name.trim().length}
+                  disabled={!invitationCode.trim().length}
                 >
                   {t("account.upgrade.continue")}
                 </button>

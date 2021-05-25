@@ -133,8 +133,7 @@ export const addObjectToGroupRequest =
 
     dispatch(addObjectToGroup({ object, groupId, route }));
   };
-{
-}
+
 const addObjectToGroup =
   ({ object, groupId, route }) =>
   async (dispatch) => {
@@ -162,3 +161,30 @@ const addObjectToGroup =
       });
     }
   };
+
+export const joinGroupRequest = (invitationCode) => (dispatch) => {
+  dispatch({
+    type: groupsTypes.ADD_OBJECT_TO_GROUP_REQUEST,
+  });
+
+  dispatch(joinGroup(invitationCode));
+};
+
+const joinGroup = (invitationCode) => async (dispatch) => {
+  const group = await (await post(`groups/add-user/${invitationCode}`)).data;
+
+  try {
+    dispatch({
+      type: groupsTypes.ADD_OBJECT_TO_GROUP_SUCCESS,
+      payload: { group: group.group },
+    });
+
+    dispatch(dismissJoinGroupModal());
+    dispatch(fetchGroupsRequest());
+  } catch (e) {
+    dispatch({
+      type: groupsTypes.ADD_OBJECT_TO_GROUP_FAILURE,
+      payload: { error: e && e.response && e.response.data },
+    });
+  }
+};
