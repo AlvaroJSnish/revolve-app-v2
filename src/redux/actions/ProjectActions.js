@@ -114,3 +114,15 @@ export const makePrediction = (values, id) => async (dispatch) => {
     });
   }
 };
+
+export const showTrainingTimeModal = () => (dispatch) => {
+  dispatch({
+    type: projectTypes.SHOW_TRAINING_MODAL,
+  });
+};
+
+export const dismissTrainingTimeModal = () => (dispatch) => {
+  dispatch({
+    type: projectTypes.DISMISS_TRAINING_MODAL,
+  });
+};
